@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">MenuDroid</string>
+    <string name="title_activity_splash_screen">MenuDroid</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!--Main Screen Buttons-->
+    <string name="btnOrder">Order</string>
+    <string name="btnBill">Bill</string>
+    <string name="btnWaiter">Waiter</string>
+    <string name="btnMenu">Menu</string>
+    <string name="btnContact">Contact</string>
+    <string name="btnRestaurant">Test</string>
+    <!-- -->
+
+
+
+</resources>
