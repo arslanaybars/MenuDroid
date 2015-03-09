@@ -7,10 +7,13 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <uses-permission android:name="android.permission.CAMERA" />
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppThemeNoAction">
+            android:theme="@style/AppThemeNoAction" >
             <intent-filter>
                 <action android:name="android.intent.action.MAINACTIVITY" />
 
@@ -20,12 +23,16 @@
         <activity
             android:name=".ui.SplashScreen"
             android:label="@string/app_name"
-            android:theme="@style/AppThemeNoAction">
+            android:theme="@style/AppThemeNoAction" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".main.OrderActivity"
+            android:label="@string/title_activity_order" >
         </activity>
     </application>
 

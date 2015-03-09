@@ -21,7 +21,7 @@ public class SplashScreen extends ActionBarActivity {
 
             public void run() {
                 try {
-                    sleep(3000);// 3 second wait
+                    sleep(4000);// 4 second wait
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {

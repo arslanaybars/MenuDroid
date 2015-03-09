@@ -1,14 +1,23 @@
 package menudroid.aybars.arslan.menudroid;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 
-public class MainActivity extends ActionBarActivity implements OnClickListener, View.OnLongClickListener {
+import menudroid.aybars.arslan.menudroid.main.OrderActivity;
+
+public class MainActivity extends ActionBarActivity implements OnClickListener {
 
     Button btnOrder, btnBill, btnWaiter, btnMenu, btnContact, btnRestaurant;
 
@@ -41,15 +50,19 @@ public class MainActivity extends ActionBarActivity implements OnClickListener, 
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btnOrder:
-                showToast("Clicked Order");
+                showDialogForBarcode();
+//                Intent intentOrder = new Intent(MainActivity.this, OrderActivity.class);
+//                startActivity(intentOrder);
                 break;
             case R.id.btnBill:
-                showToast("Clicked Bill");
+                showDialogForBarcode();
+//                Intent intentBill = new Intent(MainActivity.this, BillActivity.class);
+//                startActivity(intentBill);
                 break;
             case R.id.btnWaiter:
-                showToast("Clicked Waiter");
+                showDialogForBarcode();
                 break;
             case R.id.btnMenu:
                 showToast("Clicked Menu");
@@ -64,26 +77,51 @@ public class MainActivity extends ActionBarActivity implements OnClickListener, 
 
     }
 
+    private void showDialogForBarcode() {
+        AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
+        dialogBuilder.setMessage(R.string.mainBarcodeMessage);
+        dialogBuilder.setTitle(R.string.mainBarcodeTitle);
+
+        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dialogBuilder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Scan Barcode
+                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                integrator.setPrompt("Scan the barcode from table !");
+                integrator.initiateScan();
+            }
+        });
+
+        dialogBuilder.create().show();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult != null) {
+            String re = scanResult.getContents();
+//          Log.d("code", re);
+            showToast(re);
+        }
+        // else continue with any other code you need in the method
+
+    }
+
+
     Toast m_currentToast;
 
-    void showToast(String text)
-    {
-        if(m_currentToast != null)
-        {
+    void showToast(String text) {
+        if (m_currentToast != null) {
             m_currentToast.cancel();
         }
         m_currentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
         m_currentToast.show();
 
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        switch (v.getId()) {
-            case R.id.btnOrder:
-                showToast("Clicked Order");
-                break;
-        }
-        return false;
     }
 }
