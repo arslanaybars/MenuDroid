@@ -12,8 +12,8 @@ This project purpose to develop a open source restaurant managment application
 
 -TODO1
 - Its our main screen
-![Main Image MenuDroid](http://www.github.com/arslanaybars/MenuDroid/img/main_screen.png)
-Our first 3 button(order, bill, waiter) working with qrcode, the devices have to read the qrcode from table( [Some codes](http://www.github.com/arslanaybars/MenuDroid/img/qrcodes) ) for register the system.
+![Main Image MenuDroid](https://github.com/arslanaybars/MenuDroid/blob/master/img/main_screen.png)
+Our first 3 button(order, bill, waiter) working with qrcode, the devices have to read the qrcode from table( [Some codes](https://github.com/arslanaybars/MenuDroid/tree/master/img/qrCodes) ) for register the system.
 we need a protocal for data communication we will use TCP/IP and after we have get data transfer from MenuDroid Server application to MenuDroid application
 
 -Used Libraries
