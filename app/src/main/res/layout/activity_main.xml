@@ -104,8 +104,8 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/btnContact"
-                android:drawableTop="@drawable/main_contact"
+                android:text="@string/btnLogin"
+                android:drawableTop="@drawable/main_qr"
                 android:padding="@dimen/main_activity_margin_ten"
                 android:textSize="@dimen/main_text_size"
                 android:background="@drawable/main_custom_button"
@@ -113,7 +113,7 @@
                 android:layout_marginLeft="5.0dp"
                 android:layout_marginRight="5.0dp"
                 android:textColor="@drawable/main_custom_button_text_color"
-                android:id="@+id/btnContact" />
+                android:id="@+id/btnLogin" />
 
             <Button
                 android:layout_width="wrap_content"
