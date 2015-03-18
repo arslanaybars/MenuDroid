@@ -19,7 +19,7 @@ import menudroid.aybars.arslan.menudroid.main.OrderActivity;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
 
-    Button btnOrder, btnBill, btnWaiter, btnMenu, btnContact, btnRestaurant;
+    Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         btnBill = (Button) findViewById(R.id.btnBill);
         btnWaiter = (Button) findViewById(R.id.btnWaiter);
         btnMenu = (Button) findViewById(R.id.btnMenu);
-        btnContact = (Button) findViewById(R.id.btnContact);
+        btnLogin = (Button) findViewById(R.id.btnLogin);
         btnRestaurant = (Button) findViewById(R.id.btnRestaurant);
 
         //onClick Events
@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         btnBill.setOnClickListener(this);
         btnWaiter.setOnClickListener(this);
         btnMenu.setOnClickListener(this);
-        btnContact.setOnClickListener(this);
+        btnLogin.setOnClickListener(this);
         btnRestaurant.setOnClickListener(this);
     }
 
@@ -67,8 +67,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
             case R.id.btnMenu:
                 showToast("Clicked Menu");
                 break;
-            case R.id.btnContact:
-                showToast("Clicked Contact");
+            case R.id.btnLogin:
+                showToast("Clicked Login");
                 break;
             case R.id.btnRestaurant:
                 showToast("Clicked Restaurant Test");
@@ -94,6 +94,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
             public void onClick(DialogInterface dialog, int which) {
                 //Scan Barcode
                 IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
+                //TODO - barcode scan message get from string.xml
                 integrator.setPrompt("Scan the barcode from table !");
                 integrator.initiateScan();
             }
