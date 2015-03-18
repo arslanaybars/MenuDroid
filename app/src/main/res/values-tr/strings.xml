@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">MenuDroid</string>
+    <string name="title_activity_splash_screen">MenuDroid</string>
+
+    <string name="hello_world">Merhaba Dünya!</string>
+    <string name="action_settings">Ayarlar</string>
+
+    <!--Main Screen Buttons-->
+    <string name="btnOrder">Sipariş</string>
+    <string name="btnBill">Hesap</string>
+    <string name="btnWaiter">Garson</string>
+    <string name="btnMenu">Menu</string>
+    <string name="btnContact">İletişim</string>
+    <string name="btnRestaurant">Test</string>
+    <string name="btnLogin">Giriş</string>
+
+    <!--Order Screen -->
+    <string name="title_activity_order">SiparişActivity</string>
+
+
+    <!--Barcode regiter info -->
+    <string name="mainBarcodeTitle">Barkod Okuyucu</string>
+    <string name="mainBarcodeMessage">Merhaba Değerli Misafirimiz;\nSistemi kullanmak için masaya giriş yapmanız gerekmektedir.\nGiriş yapmak için Giriş butonuna tıklayıp barkodu okutunuz.</string>
+    <string name="accept">Giriş</string>
+    <string name="cancel">Vazgeç</string>
+    <!-- -->
+
+    <string name="barcode_scan_title">Masadaki barkodu taratınız !</string>
+
+
+
+</resources>

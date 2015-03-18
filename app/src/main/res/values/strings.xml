@@ -12,14 +12,19 @@
     <string name="btnMenu">Menu</string>
     <string name="btnContact">Contact</string>
     <string name="btnRestaurant">Test</string>
-    <!-- -->
+    <string name="btnLogin">Log in</string>
+
+    <!--Order Screen -->
+    <string name="title_activity_order">OrderActivity</string>
+
 
     <!--Barcode regiter info -->
     <string name="mainBarcodeTitle">Barcode Read</string>
     <string name="mainBarcodeMessage">Hello Dear Guest;\nYou need to register table, For register please read the barcode from app.\nFor continue press accept.</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
-    <string name="title_activity_order">OrderActivity</string>
     <!-- -->
+
+    <string name="barcode_scan_title">Scan the barcode from table !</string>
 
 </resources>
