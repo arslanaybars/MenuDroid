@@ -29,9 +29,9 @@ import menudroid.aybars.arslan.menudroid.main.OrderActivity;
 public class MainActivity extends ActionBarActivity implements OnClickListener {
 
     private Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant;
-    private String qrString = "TestMessage";
-    private final String SERVER_IP = "192.168.1.33"; //Define the server port
+    private final String SERVER_IP = "192.168.1.36"; //Define the server port
     private final String SERVER_PORT = "8080"; //Define the server port
+    private static String qrResult = "NotFound"; // Define qrCodes string form barcode
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +79,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 break;
             case R.id.btnMenu:
                 showToast("Clicked Menu");
+//              Log.i("qrCodes String :", qrResult);
                 break;
             case R.id.btnLogin:
                 showToast("Clicked Login");
@@ -87,7 +88,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 ClientAsyncTask clientAST = new ClientAsyncTask();
                 //Pass the server ip, port and client message to the AsyncTask
                 // send from barcode reader
-                clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,qrString});
+                clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,qrResult});
                 break;
             case R.id.btnRestaurant:
                 showToast("Clicked Restaurant Test");
@@ -170,9 +171,9 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
             String re = scanResult.getContents();
             Log.i("code", re);
             showToast(re);
+            qrResult = re;
         }
         // else continue with any other code you need in the method
-
     }
 
 
