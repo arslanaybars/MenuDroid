@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="menudroid.aybars.arslan.menudroid" >
+    package="menudroid.aybars.arslan.menudroid">
+
+    <!-- For Barcode -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- For Tcp-Ip Connection -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
-
-        <!--For Barcode -->
-        <uses-permission android:name="android.permission.CAMERA" />
-
-        <!--For Tcp-Ip Connection-->
-        <uses-permission android:name="android.permission.INTERNET" />
-        <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-        <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-
-
+        android:theme="@style/AppTheme">
 
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppThemeNoAction" >
+            android:theme="@style/AppThemeNoAction">
             <intent-filter>
                 <action android:name="android.intent.action.MAINACTIVITY" />
 
@@ -32,7 +31,7 @@
         <activity
             android:name=".ui.SplashScreen"
             android:label="@string/app_name"
-            android:theme="@style/AppThemeNoAction" >
+            android:theme="@style/AppThemeNoAction">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -41,8 +40,10 @@
         </activity>
         <activity
             android:name=".main.OrderActivity"
-            android:label="@string/title_activity_order" >
-        </activity>
+            android:label="@string/title_activity_order"></activity>
+        <activity
+            android:name=".main.MenuActivity"
+            android:label="@string/title_activity_menu"></activity>
     </application>
 
 </manifest>
