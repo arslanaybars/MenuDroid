@@ -26,5 +26,6 @@
     <!-- -->
 
     <string name="barcode_scan_title">Scan the barcode from table !</string>
+    <string name="title_activity_menu">MenuActivity</string>
 
 </resources>
