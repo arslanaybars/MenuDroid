@@ -2,6 +2,7 @@ package menudroid.aybars.arslan.menudroid;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,11 +16,22 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
 import menudroid.aybars.arslan.menudroid.main.OrderActivity;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
 
-    Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant;
+    private Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant;
+    private String qrString = "TestMessage";
+    private final String SERVER_IP = "192.168.1.33"; //Define the server port
+    private final String SERVER_PORT = "8080"; //Define the server port
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +40,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
         // Initalize buttons
         initialize();
+
     }
 
     private void initialize() {
@@ -69,6 +82,12 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 break;
             case R.id.btnLogin:
                 showToast("Clicked Login");
+
+                //Create an instance of AsyncTask
+                ClientAsyncTask clientAST = new ClientAsyncTask();
+                //Pass the server ip, port and client message to the AsyncTask
+                // send from barcode reader
+                clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,qrString});
                 break;
             case R.id.btnRestaurant:
                 showToast("Clicked Restaurant Test");
@@ -103,11 +122,53 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         dialogBuilder.create().show();
     }
 
+    /**
+     * AsyncTask which handles the communication with the server
+     */
+    class ClientAsyncTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... params) {
+            String result = null;
+            try {
+                //Create a client socket and define internet address and the port of the server
+                Socket socket = new Socket(params[0],
+                        Integer.parseInt(params[1]));
+                //Get the input stream of the client socket
+                InputStream is = socket.getInputStream();
+                //Get the output stream of the client socket
+                PrintWriter out = new PrintWriter(socket.getOutputStream(),true);
+                //Write data to the output stream of the client socket
+                out.println(params[2]);
+                //Buffer the data coming from the input stream
+                BufferedReader br = new BufferedReader(
+                        new InputStreamReader(is));
+                //Read data in the input buffer
+                result = br.readLine();
+                //Close the client socket
+                socket.close();
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            //Write server message to the text view
+     //       Log.i("Server Message", s);
+            showToast(s);
+        }
+    }
+
+
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
             String re = scanResult.getContents();
-//          Log.d("code", re);
+            Log.i("code", re);
             showToast(re);
         }
         // else continue with any other code you need in the method
