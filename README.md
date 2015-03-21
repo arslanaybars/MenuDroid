@@ -12,6 +12,7 @@ This project purpose to develop a open source restaurant managment application
 
 -TODO - 1
 - Its our main screen
+
 ![Main Image MenuDroid](https://github.com/arslanaybars/MenuDroid/blob/master/img/main_screen.png)
 
 
