@@ -5,15 +5,21 @@ This project purpose to develop a open source restaurant managment application
 
 -TODO
 
-* register table with qrcode reader
-* Tcp-Ip communication with server side
-* Basic detais, add some detail about company
-* Create a server application for this prohect
+* register table with qrcode reader +
+* Tcp-Ip communication with server side +
+* Basic detais, add some detail about company +
+* Create a server application for this prohect +
+* Create the ordered
+* fixed design problems
+* Create under test activty
 
--TODO - 1
 - Its our main screen
 
 ![Main Image MenuDroid](https://github.com/arslanaybars/MenuDroid/blob/master/img/main_screen.png)
+
+- Its menu screen
+
+![Menu Image MenuDroid](https://github.com/arslanaybars/MenuDroid/blob/master/img/menu_screen.png)
 
 
 Our first 3 button(order, bill, waiter) working with qrcode, the devices have to read the qrcode from table( [Some codes](https://github.com/arslanaybars/MenuDroid/tree/master/img/qrCodes) ) for register the system.
