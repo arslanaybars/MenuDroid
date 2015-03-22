@@ -23,14 +23,17 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import menudroid.aybars.arslan.menudroid.main.MenuActivity;
+
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
 
     private Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant;
-    private final String SERVER_IP = "192.168.1.73"; //Define the server port
+    private final String SERVER_IP = "192.168.1.33"; //Define the server port
     private final String SERVER_PORT = "8080"; //Define the server port
     private static String qrResult = "NotFound"; // Define qrCodes string form barcode
     private String qrComplement="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,13 +83,13 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
                 break;
             case R.id.btnWaiter:
+                qrComplement="W-";
                 showDialogForBarcode();
-                qrComplement="w-";
                 break;
             case R.id.btnMenu:
 //              showToast("Clicked Menu");
-                //  Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
-                //  startActivity(intentMenu);
+                Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
+                startActivity(intentMenu);
 //              Log.i("qrCodes String :", qrResult);
                 break;
             case R.id.btnLogin:
@@ -122,8 +125,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
             public void onClick(DialogInterface dialog, int which) {
                 //Scan Barcode
                 IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-                //TODO - barcode scan message get from string.xml
-                integrator.setPrompt("Scan the barcode from table !");
+                integrator.setPrompt(getString(R.string.barcode_scan_title));
                 integrator.initiateScan();
             }
         });

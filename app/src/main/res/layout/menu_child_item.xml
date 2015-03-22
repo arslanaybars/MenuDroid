@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/child_food"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="deneme"
+        android:paddingLeft="20dp"
+        android:layout_toRightOf="@+id/item_img"
+        android:layout_toEndOf="@+id/item_img"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/item_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="price"
+        android:paddingLeft="25dp"
+        android:layout_toRightOf="@+id/item_img"
+        android:layout_toEndOf="@+id/item_img"
+        android:layout_below="@id/child_food"
+        />
+
+    <ImageView
+        android:id="@+id/item_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_food"
+        android:contentDescription="@string/app_name"/>
+
+
+    <ImageView
+        android:id="@+id/item_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:src="@mipmap/ic_add_black_24dp"
+        android:contentDescription="@string/app_name"/>
+
+    <ImageView
+        android:id="@+id/item_remove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_remove_black_24dp"
+        android:contentDescription="@string/app_name"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@+id/item_add"
+        android:layout_toStartOf="@+id/item_add" />
+
+</RelativeLayout>

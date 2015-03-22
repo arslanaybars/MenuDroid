@@ -5,4 +5,7 @@
     <color name="accentColor">#8F90DD</color>
 
     <color name="splashBackground">#c91f12</color>
+
+    <color name="myCustomToolBarTextColorPrimary">#FFFFFF</color>
+    <color name="myCustomToolBarTextColorSecondary">#123456</color>
 </resources>

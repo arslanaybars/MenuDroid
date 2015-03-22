@@ -28,4 +28,52 @@
     <string name="barcode_scan_title">Scan the barcode from table !</string>
     <string name="title_activity_menu">MenuActivity</string>
 
+
+    <!-- MenuActivity -->
+    <string name="action_done">Done</string>
+    <string name="action_info">Info</string>
+
+    <!--Menu List Item-->
+    <string name="list_breakfast">Breakfast</string>
+    <string name="list_soup">Soup</string>
+    <string name="list_pancake">Pancake</string>
+    <string name="list_main_dish">Main Dish</string>
+    <string name="list_desert">Desert</string>
+    <string name="list_drinks">Drinks</string>
+
+    <!--Food Items-->
+    <!--Breakfast-->
+    <string name="food_breakfast">Breakfast Plate</string>
+    <string name="food_breakfast_ottoman">Ottoman Breakfast</string>
+
+    <!--Soups-->
+    <string name="food_tarhana_soup">Tarhana Soup</string>
+    <string name="food_tarhana_soup_content">The cream of yogurt is blended with flour, spice, vegetables and got fermenteds</string>
+    <string name="food_yayla_soup">Yayla Soup</string>
+    <string name="food_yayla_soup_content">The rice is blended with yogurt is blended and pepper mint</string>
+    <string name="food_akdene_soup">Akdene Soup</string>
+    <string name="food_akdene_soup_content">The smashed barleycorns are cooked with yogurt and peppermint</string>
+    <string name="food_keskek_soup">Keskek Soup</string>
+    <string name="food_akdene_keskek_content">The peeled wheatcorns are boiled in hot water and blended milk and pepper </string>
+
+    <!--Pancake-->
+    <string name="food_meat_pancake">Meat Pancake</string>
+    <string name="food_yogurt_pancake">Yogurt Pancake</string>
+    <string name="food_cheese_pancake">Cheese Pancake</string>
+    <string name="food_potatoes_pancake">Potatoes Pancake</string>
+    <string name="food_spinach_pancake">spinach Pancake</string>
+
+    <!--Main Dishes-->
+    <string name="food_main_1">main 1</string>
+    <string name="food_main_2">main 2</string>
+    <string name="food_main_3">main 3</string>
+
+    <!--Desert-->
+    <string name="food_desert_1">desert 1</string>
+
+
+    <!--Drinks-->
+    <string name="food_drink_1">drink 1</string>
+
+
 </resources>

@@ -43,7 +43,8 @@
             android:label="@string/title_activity_order"></activity>
         <activity
             android:name=".main.MenuActivity"
-            android:label="@string/title_activity_menu"></activity>
+            android:label="@string/title_activity_menu"
+            android:theme="@style/AppThemeNoAction"></activity>
     </application>
 
 </manifest>
