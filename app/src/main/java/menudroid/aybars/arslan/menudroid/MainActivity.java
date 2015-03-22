@@ -24,6 +24,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import menudroid.aybars.arslan.menudroid.main.MenuActivity;
 import menudroid.aybars.arslan.menudroid.main.OrderActivity;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
@@ -63,29 +64,37 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
     @Override
     public void onClick(View v) {
 
+        ClientAsyncTask clientAST = new ClientAsyncTask();
+
         switch (v.getId()) {
             case R.id.btnOrder:
                 showDialogForBarcode();
 //                Intent intentOrder = new Intent(MainActivity.this, OrderActivity.class);
 //                startActivity(intentOrder);
+                  clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,"O-"+qrResult});
+
                 break;
             case R.id.btnBill:
                 showDialogForBarcode();
 //                Intent intentBill = new Intent(MainActivity.this, BillActivity.class);
 //                startActivity(intentBill);
+                  clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,"B-"+qrResult});
                 break;
             case R.id.btnWaiter:
-                showDialogForBarcode();
+                  showDialogForBarcode();
+                  clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,"W-"+qrResult});
                 break;
             case R.id.btnMenu:
-                showToast("Clicked Menu");
+//              showToast("Clicked Menu");
+                Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
+                startActivity(intentMenu);
 //              Log.i("qrCodes String :", qrResult);
                 break;
             case R.id.btnLogin:
                 showToast("Clicked Login");
 
                 //Create an instance of AsyncTask
-                ClientAsyncTask clientAST = new ClientAsyncTask();
+
                 //Pass the server ip, port and client message to the AsyncTask
                 // send from barcode reader
                 clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,qrResult});
