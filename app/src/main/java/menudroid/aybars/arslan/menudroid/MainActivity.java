@@ -3,8 +3,8 @@ package menudroid.aybars.arslan.menudroid;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.AlertDialogWrapper;
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -24,16 +23,14 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import menudroid.aybars.arslan.menudroid.main.MenuActivity;
-import menudroid.aybars.arslan.menudroid.main.OrderActivity;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
 
     private Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant;
-    private final String SERVER_IP = "192.168.1.36"; //Define the server port
+    private final String SERVER_IP = "192.168.1.73"; //Define the server port
     private final String SERVER_PORT = "8080"; //Define the server port
     private static String qrResult = "NotFound"; // Define qrCodes string form barcode
-
+    private String qrComplement="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,26 +65,28 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
         switch (v.getId()) {
             case R.id.btnOrder:
+                qrComplement="O-";
                 showDialogForBarcode();
 //                Intent intentOrder = new Intent(MainActivity.this, OrderActivity.class);
 //                startActivity(intentOrder);
-                  clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,"O-"+qrResult});
+
 
                 break;
             case R.id.btnBill:
+                qrComplement="B-";
                 showDialogForBarcode();
 //                Intent intentBill = new Intent(MainActivity.this, BillActivity.class);
 //                startActivity(intentBill);
-                  clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,"B-"+qrResult});
+
                 break;
             case R.id.btnWaiter:
-                  showDialogForBarcode();
-                  clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,"W-"+qrResult});
+                showDialogForBarcode();
+                qrComplement="w-";
                 break;
             case R.id.btnMenu:
 //              showToast("Clicked Menu");
-                Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
-                startActivity(intentMenu);
+                //  Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
+                //  startActivity(intentMenu);
 //              Log.i("qrCodes String :", qrResult);
                 break;
             case R.id.btnLogin:
@@ -168,19 +167,24 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         @Override
         protected void onPostExecute(String s) {
             //Write server message to the text view
-     //       Log.i("Server Message", s);
+            //       Log.i("Server Message", s);
             showToast(s);
         }
     }
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        Log.i("codex", ""+resultCode);
+        Log.i("codex", ""+requestCode);
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
             String re = scanResult.getContents();
             Log.i("code", re);
             showToast(re);
             qrResult = re;
+            ClientAsyncTask clientASTx = new ClientAsyncTask();
+            clientASTx.execute(new String[] {SERVER_IP, SERVER_PORT,qrComplement+qrResult});
+            qrComplement="";
         }
         // else continue with any other code you need in the method
     }
