@@ -1,7 +1,7 @@
 # MenuDroid
 MenuDroid - Android Restaurant Managment Project
 
-This project purpose to develop a open source restaurant managment application
+This project purpose to develop a open source restaurant management application
 
 -TODO
 
