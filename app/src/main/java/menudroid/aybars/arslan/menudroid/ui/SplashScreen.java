@@ -17,6 +17,11 @@ public class SplashScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
+        /*
+         * When we get the menu from json
+         * use splash
+         */
+
         Thread timer = new Thread() {
 
             public void run() {

@@ -28,11 +28,11 @@ import menudroid.aybars.arslan.menudroid.main.MenuActivity;
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
 
-    private Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant;
+    private Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant; // Define mainactivity buttons
     private final String SERVER_IP = "192.168.1.33"; //Define the server port
     private final String SERVER_PORT = "8080"; //Define the server port
     private static String qrResult = "NotFound"; // Define qrCodes string form barcode
-    private String qrComplement="";
+    private String qrComplement=""; // Complement for understanding messafge from order,bill or waiter
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,43 +66,48 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
         ClientAsyncTask clientAST = new ClientAsyncTask();
 
+        /*
+         * TODO
+         * modified if the user register dont showDialogForBarcode()
+         * if the user not register show till he registered
+         */
         switch (v.getId()) {
             case R.id.btnOrder:
+                Log.i("Clicked:", btnOrder.toString());
                 qrComplement="O-";
-                showDialogForBarcode();
+                  showDialogForBarcode();
+//                Go MenuActivity for order
 //                Intent intentOrder = new Intent(MainActivity.this, OrderActivity.class);
 //                startActivity(intentOrder);
-
-
                 break;
             case R.id.btnBill:
+                Log.i("Clicked:", btnBill.toString());
                 qrComplement="B-";
                 showDialogForBarcode();
-//                Intent intentBill = new Intent(MainActivity.this, BillActivity.class);
-//                startActivity(intentBill);
-
+//              need a dialog for ask you sure ? dialog have price and question
                 break;
             case R.id.btnWaiter:
+                Log.i("Clicked:", btnWaiter.toString());
                 qrComplement="W-";
                 showDialogForBarcode();
+//              need a dialog for ask you sure ?
                 break;
             case R.id.btnMenu:
-//              showToast("Clicked Menu");
+                Log.i("Clicked:", btnMenu.toString());
                 Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
                 startActivity(intentMenu);
-//              Log.i("qrCodes String :", qrResult);
                 break;
             case R.id.btnLogin:
-                showToast("Clicked Login");
+                Log.i("Clicked:", btnLogin.toString());
+                scanBarcode();
 
                 //Create an instance of AsyncTask
-
                 //Pass the server ip, port and client message to the AsyncTask
-                // send from barcode reader
-                clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,qrResult});
+                //send from barcode reader
+                //clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,qrResult});
                 break;
             case R.id.btnRestaurant:
-                showToast("Clicked Restaurant Test");
+                Log.i("Clicked:", btnRestaurant.toString());
                 break;
         }
 
@@ -124,13 +129,18 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Scan Barcode
-                IntentIntegrator integrator = new IntentIntegrator(MainActivity.this);
-                integrator.setPrompt(getString(R.string.barcode_scan_title));
-                integrator.initiateScan();
+                scanBarcode();
             }
         });
 
         dialogBuilder.create().show();
+    }
+
+    //scanBarcode method
+    private void scanBarcode() {
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setPrompt(getString(R.string.barcode_scan_title));
+        integrator.initiateScan();
     }
 
     /**
@@ -169,8 +179,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         @Override
         protected void onPostExecute(String s) {
             //Write server message to the text view
-            //       Log.i("Server Message", s);
-            showToast(s);
+            Log.i("Server Message", s);
         }
     }
 
@@ -179,16 +188,16 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         Log.i("codex", ""+resultCode);
         Log.i("codex", ""+requestCode);
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanResult != null) {
-            String re = scanResult.getContents();
+        try {
+            String re = scanResult.getContents(); // getScan result
             Log.i("code", re);
-            showToast(re);
             qrResult = re;
             ClientAsyncTask clientASTx = new ClientAsyncTask();
-            clientASTx.execute(new String[] {SERVER_IP, SERVER_PORT,qrComplement+qrResult});
-            qrComplement="";
+            clientASTx.execute(new String[] {SERVER_IP, SERVER_PORT,qrComplement+qrResult}); // Send string "qrComplement+qrResult"
+            qrComplement=""; // clear qrComplement string
+        }catch (NullPointerException e) {
+            e.printStackTrace();
         }
-        // else continue with any other code you need in the method
     }
 
 
