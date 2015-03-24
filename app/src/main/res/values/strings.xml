@@ -14,6 +14,7 @@
     <string name="btnRestaurant">Test</string>
     <string name="btnLogin">Log in</string>
 
+
     <!--Order Screen -->
     <string name="title_activity_order">OrderActivity</string>
 
@@ -24,6 +25,15 @@
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <!-- -->
+
+    <!--Set IP Dialog -->
+    <string name="set_ip">Set Server Ip</string>
+    <string name="set_ip_ok">OK</string>
+    <string name="set_ip_cancel">CANCEL</string>
+    <string name="enter_server_ip">Enter Server IP</string>
+
+
+
 
     <string name="barcode_scan_title">Scan the barcode from table !</string>
     <string name="title_activity_menu">MenuActivity</string>

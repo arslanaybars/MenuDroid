@@ -6,4 +6,10 @@
     <dimen name="main_activity_margin_eight">8dp</dimen>
     <dimen name="main_activity_margin_ten">10dp</dimen>
     <dimen name="main_text_size">15sp</dimen>
+
+    <dimen name="zero">0sp</dimen>
+    <dimen name="padding_size">4sp</dimen>
+
+    <dimen name="den">1px</dimen>
+
 </resources>
