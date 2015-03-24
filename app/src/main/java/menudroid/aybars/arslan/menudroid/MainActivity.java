@@ -157,6 +157,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String ipData = etIP.getEditableText().toString().trim();
+                        SERVER_IP = ipData;
                         Editor editor = ipPrefrence.edit();
                         editor.putString("ipData",ipData);
                         editor.commit();
