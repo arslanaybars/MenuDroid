@@ -1,9 +1,11 @@
 package menudroid.aybars.arslan.menudroid.main;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,13 +13,34 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import menudroid.aybars.arslan.menudroid.R;
-import menudroid.aybars.arslan.menudroid.main.MenuExpandableListAdapter;
 
 
 public class MenuActivity extends ActionBarActivity {
@@ -29,6 +52,8 @@ public class MenuActivity extends ActionBarActivity {
     Map<String, List<String>> menuCollection;
     ExpandableListView expListView;
 
+    private ArrayList<Map<String, String>> ListData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +62,9 @@ public class MenuActivity extends ActionBarActivity {
         //set toolbar
         toolbar = (Toolbar) findViewById(R.id.menu_toolbar);
         setSupportActionBar(toolbar);
-
-        createGroupList();
-
-        createCollection();
+        getJsonFromWeb(); //with this method I get the json from URL
+        //createGroupList();
+        //createCollection();
 
         expListView = (ExpandableListView) findViewById(R.id.food_list);
         final MenuExpandableListAdapter expListAdapter = new MenuExpandableListAdapter(this, groupList, menuCollection);
@@ -58,6 +82,124 @@ public class MenuActivity extends ActionBarActivity {
         });
 
 
+    }
+
+    private void getJsonFromWeb()
+    {
+        menuCollection = new LinkedHashMap<String, List<String>>();
+        groupList = new ArrayList<String>();
+
+        /* It would be better if  this process will be in a Thread.*/
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            /*To avoid the android.os.NetworkOnMainThreadException*/
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        String jsonResponse = "";
+        HttpPost httppost = new HttpPost(
+                "http://pastebin.com/raw.php?i=vYSF3Lht");
+        //the place where you can edit the json
+        /* http://pastebin.com/vYSF3Lht
+        * click at RAW option to get the url from HttPost method   
+        * */
+        try {
+            List<NameValuePair> postValues = new ArrayList<NameValuePair>();
+            httppost.setEntity(new UrlEncodedFormEntity(postValues));
+            // timeout params
+            HttpParams httpParameters = new BasicHttpParams();
+            int timeoutConnection = 9000;
+            HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
+            int timeoutSocket = 9000;
+            HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
+            HttpClient httpclient = new DefaultHttpClient(httpParameters);
+            // //
+            HttpResponse protocolResponse = httpclient.execute(httppost);
+            HttpEntity entity = protocolResponse.getEntity();
+            InputStream is = entity.getContent();
+            String result = StreamToString(is);
+
+            try {
+                JSONObject jsonObject = new JSONObject(result);
+                JSONObject jsonField = new JSONObject(result);
+                Log.d("JSON", jsonField.get("success").toString());
+                String success = jsonField.get("success").toString();
+                if(success.equals("1")){
+                    /* Detect field success has value 1*/
+                    JSONArray CategoriesArray = jsonObject.getJSONArray("categories"); /*getting the JSON Array with the key categories */
+                    if (CategoriesArray != null) {
+                        for (int i = 0; i < CategoriesArray.length(); i++) { //Search inner the Categories array
+                            String categoryName = CategoriesArray.getJSONObject(i).getString("name");
+                            groupList.add(categoryName); //add to the  groupList
+                            Log.d("CATEGORY", "The category is "+ categoryName);
+                            JSONArray FoodNameArray = new JSONArray(CategoriesArray.getJSONObject(i).getString("content"));
+                            childList = new ArrayList<String>();
+
+                            for (int j = 0; j < FoodNameArray.length(); j++) {
+                                String Foodname = FoodNameArray.getJSONObject(j).getString("food");//get the value from key food
+                                String price = FoodNameArray.getJSONObject(j).getString("price");//get the value from key price
+                                Log.d("Food", "The food from category "+ categoryName+" is "+ Foodname + " this cost : "+price);
+                                childList.add(Foodname); //add the food in the childList
+                            }
+                            menuCollection.put(categoryName, childList);
+                        }
+                     }
+                }
+
+            } catch (JSONException e) {
+                jsonResponse = e.toString();
+                Log.d("exception", ""+jsonResponse);
+            }
+        }
+        // kind of exceptions.
+        catch (UnsupportedEncodingException e) {
+            // e.printStackTrace();
+            jsonResponse = e.toString();
+            Log.d("exception", ""+jsonResponse);
+        } catch (ClientProtocolException e) {
+            // e.printStackTrace();
+            jsonResponse = e.toString();
+            Log.d("exception", ""+jsonResponse);
+        } catch (ConnectTimeoutException e) {
+            // jsonResponse="-1";
+            jsonResponse = e.toString();
+            Log.d("exception", ""+jsonResponse);
+        } catch (SocketTimeoutException e) {
+            // jsonResponse="-1";
+            jsonResponse = e.toString();
+            Log.d("exception", ""+jsonResponse);
+        } catch (IOException e) {
+            jsonResponse = e.toString();
+            Log.d("exception", ""+jsonResponse);
+            // e.printStackTrace();
+        } catch (Exception e) {
+            jsonResponse = e.toString();
+            Log.d("exception", ""+jsonResponse);
+        }
+    }
+
+    public static String StreamToString(InputStream is) { //convert Stream to String
+        //Create the  Buffer
+        BufferedReader reader =
+                new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        try {
+            //Read all the lines
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return sb.toString();
     }
 
     private void createGroupList() {
