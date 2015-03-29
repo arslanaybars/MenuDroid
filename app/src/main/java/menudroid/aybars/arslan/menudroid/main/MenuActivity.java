@@ -90,7 +90,6 @@ public class MenuActivity extends ActionBarActivity {
         groupList = new ArrayList<String>();
 
         /* It would be better if  this process will be in a Thread.*/
-
         if (android.os.Build.VERSION.SDK_INT > 9) {
             /*To avoid the android.os.NetworkOnMainThreadException*/
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -99,7 +98,7 @@ public class MenuActivity extends ActionBarActivity {
 
         String jsonResponse = "";
         HttpPost httppost = new HttpPost(
-                "http://pastebin.com/raw.php?i=vYSF3Lht");
+                "http://arslanaybars.com/MenuDroid/menuDroid-menu.json");
         //the place where you can edit the json
         /* http://pastebin.com/vYSF3Lht
         * click at RAW option to get the url from HttPost method   
@@ -201,7 +200,7 @@ public class MenuActivity extends ActionBarActivity {
         }
         return sb.toString();
     }
-
+/*
     private void createGroupList() {
         groupList = new ArrayList<String>();
         groupList.add(getString(R.string.list_breakfast));
@@ -211,7 +210,9 @@ public class MenuActivity extends ActionBarActivity {
         groupList.add(getString(R.string.list_desert));
         groupList.add(getString(R.string.list_drinks));
     }
+*/
 
+/*
     private void createCollection() {
         // preparing foods collection(child)
         String[] breakfastModels = {getString(R.string.food_breakfast), getString(R.string.food_breakfast_ottoman)};
@@ -246,7 +247,7 @@ public class MenuActivity extends ActionBarActivity {
         for (String model : foodModels)
             childList.add(model);
     }
-
+*/
     private void setGroupIndicatorToRight() {
         /* Get the screen width */
         DisplayMetrics dm = new DisplayMetrics();
@@ -302,7 +303,6 @@ public class MenuActivity extends ActionBarActivity {
     }
 
     Toast m_currentToast;
-
     //showToast method
     void showToast(String text) {
         if (m_currentToast != null) {
