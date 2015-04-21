@@ -199,6 +199,7 @@ public class MenuActivity extends ActionBarActivity {
         }
         return sb.toString();
     }
+
 /*
     private void createGroupList() {
         groupList = new ArrayList<String>();
@@ -247,6 +248,7 @@ public class MenuActivity extends ActionBarActivity {
             childList.add(model);
     }
 */
+
     private void setGroupIndicatorToRight() {
         /* Get the screen width */
         DisplayMetrics dm = new DisplayMetrics();
