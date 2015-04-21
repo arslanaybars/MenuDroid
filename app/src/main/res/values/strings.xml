@@ -34,6 +34,10 @@
     <string name="set_ip_cancel">CANCEL</string>
     <string name="enter_server_ip">Enter Server IP</string>
 
+    <!--Order Dialog-->
+    <string name="main_order_title">Order</string>
+    <string name="main_order_message">You should go menu</string>
+
     <!--Waiter Dialog-->
     <string name="main_waiter_title">Call Waiter</string>
     <string name="main_waiter_message">Are you sure you want to call waiter ?</string>
