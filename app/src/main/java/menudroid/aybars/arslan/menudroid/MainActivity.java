@@ -33,7 +33,7 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 
 import menudroid.aybars.arslan.menudroid.main.MenuActivity;
-import menudroid.aybars.arslan.menudroid.main.OrderActivity;
+import menudroid.aybars.arslan.menudroid.main.RestaurantActivity;
 
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
@@ -137,6 +137,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 break;
             case R.id.btnRestaurant:
                 Log.i("Clicked:", btnRestaurant.toString());
+                Intent intentRestaurant = new Intent(MainActivity.this, RestaurantActivity.class);
+                startActivity(intentRestaurant);
                 break;
 
             case R.id.imgSetIP:
