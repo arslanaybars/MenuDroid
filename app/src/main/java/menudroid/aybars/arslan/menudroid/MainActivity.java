@@ -33,6 +33,7 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 
 import menudroid.aybars.arslan.menudroid.main.MenuActivity;
+import menudroid.aybars.arslan.menudroid.main.OrderActivity;
 
 
 public class MainActivity extends ActionBarActivity implements OnClickListener {
@@ -92,10 +93,11 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
             case R.id.btnOrder:
                 Log.i("Clicked:", btnOrder.toString());
                 qrComplement = "O-";
-                showDialogForBarcode();
-//                Go MenuActivity for order
-//                Intent intentOrder = new Intent(MainActivity.this, OrderActivity.class);
-//                startActivity(intentOrder);
+                if(qrResult == null || qrResult == "NotFound" )
+                    showDialogForBarcode();
+                else
+                    showDialogOrder();
+
                 break;
             case R.id.btnBill:
                 Log.i("Clicked:", btnBill.toString());
@@ -186,6 +188,31 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
     }
 
+    private void showDialogOrder(){
+        AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
+        dialogBuilder.setMessage(R.string.main_order_message);
+        dialogBuilder.setTitle(R.string.main_order_title);
+
+        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dialogBuilder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Scan Barcode
+                //TODO CALL WAITER
+                Log.i("table res : ", qrResult);
+                Intent intentOrder = new Intent(MainActivity.this, MenuActivity.class);
+                startActivity(intentOrder);
+            }
+        });
+        dialogBuilder.create().show();
+    }
+
     private void showDialogWaiter(){
         AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
         dialogBuilder.setMessage(R.string.main_waiter_message);
@@ -236,9 +263,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 setSendData();
             }
         });
-
         dialogBuilder.create().show();
-
     }
 
 
