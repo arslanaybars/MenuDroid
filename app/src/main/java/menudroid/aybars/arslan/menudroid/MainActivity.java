@@ -57,7 +57,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
     }
 
-
     private void initialize() {
         btnOrder = (Button) findViewById(R.id.btnOrder);
         btnBill = (Button) findViewById(R.id.btnBill);
@@ -101,13 +100,22 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
             case R.id.btnBill:
                 Log.i("Clicked:", btnBill.toString());
                 qrComplement = "B-";
-                showDialogForBarcode();
+                if(qrResult == null || qrResult == "NotFound" )
+                    showDialogForBarcode();
+                else
+                    showDialogBill();
+
 //              need a dialog for ask you sure ? dialog have price and question
                 break;
             case R.id.btnWaiter:
                 Log.i("Clicked:", btnWaiter.toString());
                 qrComplement = "W-";
-                showDialogForBarcode();
+                //TODO session
+                //if statemant check the already table register or nor
+                if(qrResult == null || qrResult == "NotFound" )
+                    showDialogForBarcode();
+                else
+                    showDialogWaiter();
 //              need a dialog for ask you sure ?
                 break;
             case R.id.btnMenu:
@@ -117,6 +125,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 break;
             case R.id.btnLogin:
                 Log.i("Clicked:", btnLogin.toString());
+                //L- means, the user register the table
+                qrComplement = "L-";
                 scanBarcode();
 
                 //Create an instance of AsyncTask
@@ -176,10 +186,66 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
     }
 
+    private void showDialogWaiter(){
+        AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
+        dialogBuilder.setMessage(R.string.main_waiter_message);
+        dialogBuilder.setTitle(R.string.main_waiter_title);
+
+        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dialogBuilder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Scan Barcode
+                //TODO CALL WAITER
+                Log.i("table res : ", qrResult);
+                setSendData();
+
+
+
+            }
+        });
+
+        dialogBuilder.create().show();
+
+    }
+
+    private void showDialogBill(){
+        AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
+        dialogBuilder.setMessage(R.string.main_bill_message);
+        dialogBuilder.setTitle(R.string.main_bill_title);
+
+        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dialogBuilder.setPositiveButton(R.string.main_bill_pay, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Scan Barcode
+                //TODO Text all order and total price
+                Log.i("table res : ", qrResult);
+                setSendData();
+            }
+        });
+
+        dialogBuilder.create().show();
+
+    }
+
+
     private void showDialogForBarcode() {
         AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
-        dialogBuilder.setMessage(R.string.mainBarcodeMessage);
-        dialogBuilder.setTitle(R.string.mainBarcodeTitle);
+        dialogBuilder.setMessage(R.string.main_barcode_message);
+        dialogBuilder.setTitle(R.string.main_barcode_title);
 
         dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -249,19 +315,23 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Log.i("codex", "" + resultCode);
-        Log.i("codex", "" + requestCode);
+        Log.i("resultCode", "" + resultCode);
+        Log.i("requestCode", "" + requestCode);
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         try {
             String re = scanResult.getContents(); // getScan result
-            Log.i("code", re);
+            Log.i("table", re);
             qrResult = re;
-            ClientAsyncTask clientASTx = new ClientAsyncTask();
-            clientASTx.execute(new String[]{SERVER_IP, SERVER_PORT, qrComplement + qrResult}); // Send string "qrComplement+qrResult"
-            qrComplement = ""; // clear qrComplement string
+            setSendData();
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
+    }
+
+    private void setSendData() {
+        ClientAsyncTask clientASTx = new ClientAsyncTask();
+        clientASTx.execute(new String[]{SERVER_IP, SERVER_PORT, qrComplement + qrResult}); // Send string "qrComplement+qrResult"
+        qrComplement = ""; // clear qrComplement string
     }
 
 

@@ -46,7 +46,6 @@ import menudroid.aybars.arslan.menudroid.R;
 public class MenuActivity extends ActionBarActivity {
 
     private Toolbar toolbar;
-    private ListView listview;
     List<String> groupList;
     List<String> childList;
     Map<String, List<String>> menuCollection;

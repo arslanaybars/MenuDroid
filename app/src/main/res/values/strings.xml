@@ -4,6 +4,8 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="barcode_scan_title">Scan the barcode from table !</string>
+    <string name="title_activity_menu">MenuActivity</string>
 
     <!--Main Screen Buttons-->
     <string name="btnOrder">Order</string>
@@ -20,8 +22,8 @@
 
 
     <!--Barcode regiter info -->
-    <string name="mainBarcodeTitle">Barcode Read</string>
-    <string name="mainBarcodeMessage">Hello Dear Guest;\nYou need to register table, For register please read the barcode from app.\nFor continue press accept.</string>
+    <string name="main_barcode_title">Barcode Read</string>
+    <string name="main_barcode_message">Hello Dear Guest;\nYou need to register table, For register please read the barcode from app.\nFor continue press accept.</string>
     <string name="accept">Accept</string>
     <string name="cancel">Cancel</string>
     <!-- -->
@@ -32,16 +34,38 @@
     <string name="set_ip_cancel">CANCEL</string>
     <string name="enter_server_ip">Enter Server IP</string>
 
+    <!--Waiter Dialog-->
+    <string name="main_waiter_title">Call Waiter</string>
+    <string name="main_waiter_message">Are you sure you want to call waiter ?</string>
 
+    <!--Bill Dialog-->
+    <string name="main_bill_title">Bill</string>
+    <string name="main_bill_message">Pay Bill\n
+        order 1 price
+        order 2 price
+        order 3 price
+        total price
+    </string>
+    <string name="main_bill_pay">Pay</string>
 
-
-    <string name="barcode_scan_title">Scan the barcode from table !</string>
-    <string name="title_activity_menu">MenuActivity</string>
 
 
     <!-- MenuActivity -->
     <string name="action_done">Done</string>
     <string name="action_info">Info</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!--Menu List Item-->
     <string name="list_breakfast">Breakfast</string>
