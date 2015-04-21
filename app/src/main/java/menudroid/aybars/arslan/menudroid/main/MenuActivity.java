@@ -1,5 +1,6 @@
 package menudroid.aybars.arslan.menudroid.main;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
@@ -12,6 +13,9 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.afollestad.materialdialogs.AlertDialogWrapper;
+import com.melnykov.fab.FloatingActionButton;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -43,13 +47,15 @@ import java.util.Map;
 import menudroid.aybars.arslan.menudroid.R;
 
 
-public class MenuActivity extends ActionBarActivity {
+public class MenuActivity extends ActionBarActivity implements View.OnClickListener {
 
     private Toolbar toolbar;
     List<String> groupList;
     List<String> childList;
     Map<String, List<String>> menuCollection;
+
     ExpandableListView expListView;
+    FloatingActionButton fab;
 
     private ArrayList<Map<String, String>> ListData;
 
@@ -58,9 +64,9 @@ public class MenuActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
 
-        //set toolbar
-        toolbar = (Toolbar) findViewById(R.id.menu_toolbar);
-        setSupportActionBar(toolbar);
+//        //set toolbar
+//        toolbar = (Toolbar) findViewById(R.id.menu_toolbar);
+//        setSupportActionBar(toolbar);
         getJsonFromWeb(); //with this method I get the json from URL
         //createGroupList();
         //createCollection();
@@ -68,6 +74,10 @@ public class MenuActivity extends ActionBarActivity {
         expListView = (ExpandableListView) findViewById(R.id.food_list);
         final MenuExpandableListAdapter expListAdapter = new MenuExpandableListAdapter(this, groupList, menuCollection);
         expListView.setAdapter(expListAdapter);
+
+        //float action button
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(this);
 
         //setGroupIndicatorToRight();
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -83,8 +93,40 @@ public class MenuActivity extends ActionBarActivity {
 
     }
 
-    private void getJsonFromWeb()
-    {
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.fab:
+                showDialogOrder();
+                break;
+
+        }
+    }
+
+    private void showDialogOrder(){
+        AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
+        dialogBuilder.setMessage(R.string.main_order_message);
+        dialogBuilder.setTitle(R.string.main_order_title);
+
+        dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        dialogBuilder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                showToast("order is ok");
+            }
+        });
+        dialogBuilder.create().show();
+    }
+
+
+    private void getJsonFromWeb() {
         menuCollection = new LinkedHashMap<String, List<String>>();
         groupList = new ArrayList<String>();
 
@@ -123,57 +165,57 @@ public class MenuActivity extends ActionBarActivity {
                 JSONObject jsonField = new JSONObject(result);
                 Log.d("JSON", jsonField.get("success").toString());
                 String success = jsonField.get("success").toString();
-                if(success.equals("1")){
+                if (success.equals("1")) {
                     /* Detect field success has value 1*/
                     JSONArray CategoriesArray = jsonObject.getJSONArray("categories"); /*getting the JSON Array with the key categories */
                     if (CategoriesArray != null) {
                         for (int i = 0; i < CategoriesArray.length(); i++) { //Search inner the Categories array
                             String categoryName = CategoriesArray.getJSONObject(i).getString("name");
                             groupList.add(categoryName); //add to the  groupList
-                            Log.d("CATEGORY", "The category is "+ categoryName);
+                            Log.d("CATEGORY", "The category is " + categoryName);
                             JSONArray FoodNameArray = new JSONArray(CategoriesArray.getJSONObject(i).getString("content"));
                             childList = new ArrayList<String>();
 
                             for (int j = 0; j < FoodNameArray.length(); j++) {
                                 String Foodname = FoodNameArray.getJSONObject(j).getString("food");//get the value from key food
                                 String price = FoodNameArray.getJSONObject(j).getString("price");//get the value from key price
-                                Log.d("Food", "The food from category "+ categoryName+" is "+ Foodname + " this cost : "+price);
+                                Log.d("Food", "The food from category " + categoryName + " is " + Foodname + " this cost : " + price);
                                 childList.add(Foodname); //add the food in the childList
                             }
                             menuCollection.put(categoryName, childList);
                         }
-                     }
+                    }
                 }
 
             } catch (JSONException e) {
                 jsonResponse = e.toString();
-                Log.d("exception", ""+jsonResponse);
+                Log.d("exception", "" + jsonResponse);
             }
         }
         // kind of exceptions.
         catch (UnsupportedEncodingException e) {
             // e.printStackTrace();
             jsonResponse = e.toString();
-            Log.d("exception", ""+jsonResponse);
+            Log.d("exception", "" + jsonResponse);
         } catch (ClientProtocolException e) {
             // e.printStackTrace();
             jsonResponse = e.toString();
-            Log.d("exception", ""+jsonResponse);
+            Log.d("exception", "" + jsonResponse);
         } catch (ConnectTimeoutException e) {
             // jsonResponse="-1";
             jsonResponse = e.toString();
-            Log.d("exception", ""+jsonResponse);
+            Log.d("exception", "" + jsonResponse);
         } catch (SocketTimeoutException e) {
             // jsonResponse="-1";
             jsonResponse = e.toString();
-            Log.d("exception", ""+jsonResponse);
+            Log.d("exception", "" + jsonResponse);
         } catch (IOException e) {
             jsonResponse = e.toString();
-            Log.d("exception", ""+jsonResponse);
+            Log.d("exception", "" + jsonResponse);
             // e.printStackTrace();
         } catch (Exception e) {
             jsonResponse = e.toString();
-            Log.d("exception", ""+jsonResponse);
+            Log.d("exception", "" + jsonResponse);
         }
     }
 
@@ -304,6 +346,7 @@ public class MenuActivity extends ActionBarActivity {
     }
 
     Toast m_currentToast;
+
     //showToast method
     void showToast(String text) {
         if (m_currentToast != null) {
