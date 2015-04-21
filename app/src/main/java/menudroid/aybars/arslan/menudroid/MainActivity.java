@@ -106,7 +106,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                     showDialogForBarcode();
                 else
                     showDialogBill();
-
 //              need a dialog for ask you sure ? dialog have price and question
                 break;
             case R.id.btnWaiter:
@@ -231,10 +230,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 //Scan Barcode
                 //TODO CALL WAITER
                 Log.i("table res : ", qrResult);
-                setSendData();
-
-
-
+                sendRequest();
             }
         });
 
@@ -260,7 +256,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 //Scan Barcode
                 //TODO Text all order and total price
                 Log.i("table res : ", qrResult);
-                setSendData();
+                sendRequest();
             }
         });
         dialogBuilder.create().show();
@@ -347,13 +343,14 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
             String re = scanResult.getContents(); // getScan result
             Log.i("table", re);
             qrResult = re;
-            setSendData();
+            sendRequest();
         } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
 
-    private void setSendData() {
+    //this method send the request from client
+    private void sendRequest() {
         ClientAsyncTask clientASTx = new ClientAsyncTask();
         clientASTx.execute(new String[]{SERVER_IP, SERVER_PORT, qrComplement + qrResult}); // Send string "qrComplement+qrResult"
         qrComplement = ""; // clear qrComplement string
