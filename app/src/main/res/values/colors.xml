@@ -8,4 +8,6 @@
 
     <color name="myCustomToolBarTextColorPrimary">#FFFFFF</color>
     <color name="myCustomToolBarTextColorSecondary">#123456</color>
+
+
 </resources>

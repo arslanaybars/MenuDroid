@@ -1,19 +1,26 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="menudroid.aybars.arslan.menudroid.main.MenuActivity">
 
-    <include
-        android:id="@+id/menu_toolbar"
-        layout="@layout/menu_toolbar" />
-
     <ExpandableListView
         android:id="@+id/food_list"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/menu_toolbar">
+        android:layout_height="match_parent">
     </ExpandableListView>
 
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@mipmap/ic_restaurant_menu_black_24dp"
+        fab:fab_colorNormal="@color/primaryColor"
+        fab:fab_colorPressed="@color/primaryColorDark"
+        fab:fab_colorRipple="@color/accentColor" />
 
-</RelativeLayout>
+
+</FrameLayout>

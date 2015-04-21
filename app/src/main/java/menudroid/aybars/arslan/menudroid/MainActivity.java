@@ -96,7 +96,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 if(qrResult == null || qrResult == "NotFound" )
                     showDialogForBarcode();
                 else
-                    showDialogOrder();
+                    showDialogMenu();
 
                 break;
             case R.id.btnBill:
@@ -187,10 +187,10 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
     }
 
-    private void showDialogOrder(){
+    private void showDialogMenu(){
         AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
-        dialogBuilder.setMessage(R.string.main_order_message);
-        dialogBuilder.setTitle(R.string.main_order_title);
+        dialogBuilder.setMessage(R.string.main_menu_message);
+        dialogBuilder.setTitle(R.string.main_menu_title);
 
         dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -233,9 +233,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 sendRequest();
             }
         });
-
         dialogBuilder.create().show();
-
     }
 
     private void showDialogBill(){

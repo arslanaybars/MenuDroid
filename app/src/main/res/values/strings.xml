@@ -34,9 +34,9 @@
     <string name="set_ip_cancel">CANCEL</string>
     <string name="enter_server_ip">Enter Server IP</string>
 
-    <!--Order Dialog-->
-    <string name="main_order_title">Order</string>
-    <string name="main_order_message">You should go menu</string>
+    <!--Menu Dialog-->
+    <string name="main_menu_title">Order</string>
+    <string name="main_menu_message">You should go menu</string>
 
     <!--Waiter Dialog-->
     <string name="main_waiter_title">Call Waiter</string>
@@ -51,6 +51,17 @@
         total price
     </string>
     <string name="main_bill_pay">Pay</string>
+
+    <!--Order Dialog-->
+    <string name="main_order_title">Order</string>
+    <string name="main_order_message">You ordered\n
+    1 - Aybars\'s Special 5$\n
+    2 - Rene\'s Special 5$\n
+    3 - Drink 1 1$\n
+    4 - Tarhana soup 2$\n\n
+        total = 13$\n
+    are you sure the ordered them</string>
+
 
 
 
