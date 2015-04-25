@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.AlertDialogWrapper;
@@ -40,15 +39,17 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import menudroid.aybars.arslan.menudroid.R;
+import menudroid.aybars.arslan.menudroid.db.SqlOperations;
 
 
 public class MenuActivity extends ActionBarActivity implements View.OnClickListener {
-
+    private SqlOperations sqliteoperation;
     private Toolbar toolbar;
     List<String> groupList;
     List<String> childList;
@@ -85,6 +86,16 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 final String selected = (String) expListAdapter.getChild(groupPosition, childPosition);
+
+                Log.d("jj","paretn is "+parent+
+                        "\n gorup position is "+ groupPosition+
+                        "\n childposition "+ childPosition+
+                        " \n and the id is "+ id);
+
+                /*
+                * Group position is the category (grouplist), example Soup,Breakfast
+                * childposition is the foodname (childList ), example cheese pancake
+                * */
                 Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG).show();
                 return true;
             }
@@ -105,9 +116,37 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
     }
 
     private void showDialogOrder(){
+
+        //here get the order
+        sqliteoperation = new SqlOperations(getApplicationContext());
+        sqliteoperation.open();
+        ArrayList<HashMap<String, String>> dictionary =sqliteoperation.getOrder();
+        sqliteoperation.close();
+
+        String totalbyFood,quantity,food_name,messageOrder,price;
+        messageOrder="\nOrder\nYour ordered";
+        float totalbyOrder=0;
+        int j;
+        for (int i = 0; i < dictionary.size(); i++) {
+
+            j=i+1;
+            /*I start at index 0 and finish at the penultimate index */
+            HashMap<String, String> map = dictionary.get(i); //Get the corresponding map from the index
+            totalbyFood=map.get("totalByFood").toString();
+            price=map.get("price").toString();
+            quantity=map.get("quantity").toString();
+            food_name=map.get("food_name").toString();
+            messageOrder+="\n "+j+" - "+food_name+" ("+price+" $  x  "+ quantity +")  "+ totalbyFood+"$";
+            totalbyOrder+=Float.parseFloat(totalbyFood);
+
+        }
+
+        messageOrder+="\n Total = "+totalbyOrder+"$\n Are you sure the ordered them";
+
         AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
-        dialogBuilder.setMessage(R.string.main_order_message);
+        dialogBuilder.setMessage(messageOrder);//R.string.main_order_message)
         dialogBuilder.setTitle(R.string.main_order_title);
+
 
         dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -180,7 +219,7 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
                                 String Foodname = FoodNameArray.getJSONObject(j).getString("food");//get the value from key food
                                 String price = FoodNameArray.getJSONObject(j).getString("price");//get the value from key price
                                 Log.d("Food", "The food from category " + categoryName + " is " + Foodname + " this cost : " + price);
-                                childList.add(Foodname); //add the food in the childList
+                                childList.add(Foodname+"||"+price); //add the food in the childList
                             }
                             menuCollection.put(categoryName, childList);
                         }

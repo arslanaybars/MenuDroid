@@ -1,15 +1,7 @@
 package menudroid.aybars.arslan.menudroid.main;
 
-import java.util.List;
-import java.util.Map;
-
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,11 +13,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+import java.util.Map;
+
 import menudroid.aybars.arslan.menudroid.R;
+import menudroid.aybars.arslan.menudroid.db.SqlOperations;
 
 
 public class MenuExpandableListAdapter extends BaseExpandableListAdapter {
-
+    private SqlOperations sqliteoperation;
     private Activity context;
     private Map<String, List<String>> menuCollections;
     private List<String> foods;
@@ -53,11 +49,25 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter {
         }
 
         TextView item = (TextView) convertView.findViewById(R.id.child_food);
+        TextView price = (TextView) convertView.findViewById(R.id.item_price);
 
         ImageView item_add = (ImageView) convertView.findViewById(R.id.item_add);
+        ImageView item_remove = (ImageView) convertView.findViewById(R.id.item_remove);
+
+        final String []details=food.split("\\|\\|");
+
         item_add.setOnClickListener(new OnClickListener() {
 
-            public void onClick(View v) {
+                     public void onClick(View v) {
+                                            Log.d("click", "click add for"+food);
+
+                         Toast.makeText(context, "click add", Toast.LENGTH_LONG).show();
+
+                         sqliteoperation = new SqlOperations(context);
+                         sqliteoperation.open();
+                         sqliteoperation.AddOrSubstractProduct(groupPosition, childPosition,details[0],Float.parseFloat(details[1]),1);
+                         sqliteoperation.close();
+
 //                AlertDialog.Builder builder = new AlertDialog.Builder(context);
 //                builder.setMessage("Do you want to remove?");
 //                builder.setCancelable(false);
@@ -78,11 +88,27 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter {
 //                        });
 //                AlertDialog alertDialog = builder.create();
 //                alertDialog.show();
-                Toast.makeText(context, "click add", Toast.LENGTH_LONG).show();
+
             }
         });
 
-        item.setText(food);
+        item_remove.setOnClickListener(new OnClickListener() {
+
+            public void onClick(View v) {
+                Log.d("click", "click remove for"+food);
+                Toast.makeText(context, "click remove", Toast.LENGTH_LONG).show();
+                sqliteoperation = new SqlOperations(context);
+                sqliteoperation.open();
+                sqliteoperation.AddOrSubstractProduct(groupPosition, childPosition,details[0],Float.parseFloat(details[1]),2);
+                sqliteoperation.close();
+
+            }
+        });
+
+        ///to separte every || , the index 0 is the food and the index 1 is the price
+
+        item.setText(details[0]);
+        price.setText(details[1]);
         return convertView;
     }
 

@@ -1,7 +1,6 @@
 package menudroid.aybars.arslan.menudroid;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -30,7 +28,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.HashMap;
 
 import menudroid.aybars.arslan.menudroid.main.MenuActivity;
 import menudroid.aybars.arslan.menudroid.main.RestaurantActivity;
@@ -365,6 +362,5 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         }
         m_currentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
         m_currentToast.show();
-
     }
 }
