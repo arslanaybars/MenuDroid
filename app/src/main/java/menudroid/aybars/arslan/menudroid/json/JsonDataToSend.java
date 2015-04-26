@@ -27,7 +27,7 @@ public class JsonDataToSend {
 
     public void setMessageJsonArray(JSONArray messageArray){
         try {
-            jsonData.put("message", messageArray);
+            jsonData.put("messageArray", messageArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }

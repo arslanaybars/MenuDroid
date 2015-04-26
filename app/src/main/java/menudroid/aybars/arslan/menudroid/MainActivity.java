@@ -1,12 +1,12 @@
 package menudroid.aybars.arslan.menudroid;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.nsd.NsdManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -24,17 +24,9 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
 
+import menudroid.aybars.arslan.menudroid.asyncs.SocketServerTask;
 import menudroid.aybars.arslan.menudroid.json.JsonDataToSend;
 import menudroid.aybars.arslan.menudroid.main.MenuActivity;
 import menudroid.aybars.arslan.menudroid.main.RestaurantActivity;
@@ -63,6 +55,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
     private NsdManager mNsdManager;
     private JSONObject jsonData;
     private JsonDataToSend jsonDataToSend;
+    private Context c=this;
+    private SocketServerTask serverAsyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,6 +222,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 //TODO CALL WAITER
                 Log.i("table res : ", qrResult);
                 Intent intentOrder = new Intent(MainActivity.this, MenuActivity.class);
+                intentOrder.putExtra("qrResult", qrResult);
+                intentOrder.putExtra("qrComplement", qrComplement);
                 startActivity(intentOrder);
             }
         });
@@ -350,7 +346,11 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         System.out.println("jsonString: "+jsonStr);
         Log.d("JSON", jsonStr);
 
-        new SocketServerTask().execute(jsonData);
+
+        //Start the AsyncTask execution
+        //Accepted client socket object will pass as the parameter
+        serverAsyncTask= new SocketServerTask(c);
+        serverAsyncTask.execute(jsonData);
 
     }
 
@@ -365,137 +365,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         m_currentToast.show();
     }
 
-    class ClientAsyncTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            String result = null;
-            try {
-                //Create a client socket and define internet address and the port of the server
-                Socket socket = new Socket(params[0],
-                        Integer.parseInt(params[1]));
-                //Get the input stream of the client socket
-                InputStream is = socket.getInputStream();
-                //Get the output stream of the client socket
-                PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-                //Write data to the output stream of the client socket
-                out.println(params[2]);
-                //Buffer the data coming from the input stream
-                BufferedReader br = new BufferedReader(
-                        new InputStreamReader(is));
-                //Read data in the input buffer
-                result = br.readLine();
-                //Close the client socket
-                socket.close();
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            } catch (UnknownHostException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            //Write server message to the text view
-            Log.i("Server Message", s);
-        }
-    }
 
 
-    private class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
-        private JSONObject jsonData;
-        private boolean success;
-
-        @Override
-        protected String doInBackground(JSONObject... params) {
-            Socket socket = null;
-            String result = null;
-            DataInputStream dataInputStream = null;
-            DataOutputStream dataOutputStream = null;
-            jsonData = params[0];
-
-            try {
-                // Create a new Socket instance and connect to host
-                socket = new Socket(SERVER_IP, SocketServerPORT);
-
-                dataOutputStream = new DataOutputStream(
-                        socket.getOutputStream());
-                dataInputStream = new DataInputStream(socket.getInputStream());
-
-                // transfer JSONObject as String to the server
-                dataOutputStream.writeUTF(jsonData.toString());
-                Log.i(TAG, "waiting for response from host");
-
-                // Thread will wait till server replies
-                //Buffer the data coming from the input stream
-                BufferedReader br = new BufferedReader(
-                        new InputStreamReader(dataInputStream));
-                //Read data in the input buffer
-                result = br.readLine();
-                //Close the client socket
-                socket.close();
-
-                /*String response = dataInputStream.readUTF();
-                Log.d(TAG,"me esta respondiendo "+response);
-                if (response != null && response.equals("Connection Accepted")) {
-                    success = true;
-                    Log.d(TAG,"yeii");
-                } else {
-                    success = false;
-                    Log.d(TAG,"not yeii");
-                }*/
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                success = false;
-            } finally {
-
-                // close socket
-                if (socket != null) {
-                    try {
-                        Log.i(TAG, "closing the socket");
-                        socket.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Log.e("ERROR",""+e.toString());
-                    }
-                }
-
-                // close input stream
-                if (dataInputStream != null) {
-                    try {
-                        dataInputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Log.e("ERROR",""+e.toString());
-                    }
-                }
-
-                // close output stream
-                if (dataOutputStream != null) {
-                    try {
-                        dataOutputStream.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Log.e("ERROR",""+e.toString());
-                    }
-                }
-            }
-            Log.d("ServerMessage", ""+result);
-            return result;
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-          /*  if (success) {
-                Toast.makeText(MainActivity.this, "Connection Done", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MainActivity.this, "Unable to connect", Toast.LENGTH_SHORT).show();
-            }
-            */
-            Log.d("ServerMessage", ""+result);
-        }
-    }
 }
