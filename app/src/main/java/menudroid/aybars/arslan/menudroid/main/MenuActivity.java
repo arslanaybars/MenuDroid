@@ -1,6 +1,8 @@
 package menudroid.aybars.arslan.menudroid.main;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
@@ -45,7 +47,9 @@ import java.util.List;
 import java.util.Map;
 
 import menudroid.aybars.arslan.menudroid.R;
+import menudroid.aybars.arslan.menudroid.asyncs.SocketServerTask;
 import menudroid.aybars.arslan.menudroid.db.SqlOperations;
+import menudroid.aybars.arslan.menudroid.json.JsonDataToSend;
 
 
 public class MenuActivity extends ActionBarActivity implements View.OnClickListener {
@@ -57,13 +61,23 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
 
     ExpandableListView expListView;
     FloatingActionButton fab;
+    private JSONObject jsonData;
+    private JsonDataToSend jsonDataToSend;
+    private Context c=this;
+
+    private SocketServerTask serverAsyncTask;
 
     private ArrayList<Map<String, String>> ListData;
+
+    private String qrResult,qrComplement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        Intent intent = getIntent();
+        qrResult = intent.getStringExtra("qrResult");
+        qrComplement = intent.getStringExtra("qrComplement");
 
 //        //set toolbar
 //        toolbar = (Toolbar) findViewById(R.id.menu_toolbar);
@@ -127,6 +141,9 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
         messageOrder="\nOrder\nYour ordered";
         float totalbyOrder=0;
         int j;
+
+        JSONArray jsonArray = new JSONArray();
+
         for (int i = 0; i < dictionary.size(); i++) {
 
             j=i+1;
@@ -139,7 +156,45 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
             messageOrder+="\n "+j+" - "+food_name+" ("+price+" $  x  "+ quantity +")  "+ totalbyFood+"$";
             totalbyOrder+=Float.parseFloat(totalbyFood);
 
+
+            JSONObject food = new JSONObject();
+            try {
+                food.put("totalByFood", totalbyFood);
+                food.put("price", price);
+                food.put("quantity", quantity);
+                food.put("food_name", food_name);
+            } catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            jsonArray.put(food);
+
         }
+      /* JSONObject OrderObj = new JSONObject();
+        try {
+            OrderObj.put("Order", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        */
+
+
+        //get the qrResult and the qrComplement to create the new JSON
+        jsonData = new JSONObject();
+        jsonDataToSend= new JsonDataToSend(); //instantiate the new JSON object
+        jsonDataToSend.setRequest("O-");
+        jsonDataToSend.setMessage(qrResult);
+        jsonDataToSend.setMessageJsonArray(jsonArray);//now the JSON is complete
+        jsonData=jsonDataToSend.getOurJson();// pass the json object to this variable.
+        String jsonStr = jsonData.toString();
+        System.out.println(" the json to sent jsonString: "+jsonStr);
+        Log.d("JSON", jsonStr);
+
+
+
+        //new SocketServerTask().execute(jsonData);
+
+
 
         messageOrder+="\n Total = "+totalbyOrder+"$\n Are you sure the ordered them";
 
@@ -159,6 +214,9 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 showToast("order is ok");
+                    //send order to server
+                serverAsyncTask= new SocketServerTask(c);
+                serverAsyncTask.execute(jsonData);
             }
         });
         dialogBuilder.create().show();
