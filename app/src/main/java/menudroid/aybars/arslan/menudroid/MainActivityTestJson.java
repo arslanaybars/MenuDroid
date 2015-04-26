@@ -22,6 +22,8 @@ import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -35,12 +37,11 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import menudroid.aybars.arslan.menudroid.json.JsonDataToSend;
 import menudroid.aybars.arslan.menudroid.main.MenuActivity;
 import menudroid.aybars.arslan.menudroid.main.RestaurantActivity;
 
 
-public class MainActivity extends ActionBarActivity implements OnClickListener {
+public class MainActivityTestJson extends ActionBarActivity implements OnClickListener {
 
     private Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant; // Define mainactivity buttons
     private ImageView imgSetIP;
@@ -61,21 +62,64 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
     private InetAddress hostAddress;
     private int hostPort;
     private NsdManager mNsdManager;
-    private JSONObject jsonData;
-    private JsonDataToSend jsonDataToSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if( savedInstanceState != null ) {
-            //recovering the states
-            qrComplement=savedInstanceState.getString("qrComplement");
-            qrResult=savedInstanceState.getString("qrResult");
-        }
+
+
+
         setContentView(R.layout.activity_main);
 
         // Initalize buttons
         initialize();
+
+
+        JSONObject student1 = new JSONObject();
+        try {
+            student1.put("id", "3");
+            student1.put("name", "NAME OF STUDENT");
+            student1.put("year", "3rd");
+            student1.put("curriculum", "Arts");
+            student1.put("birthday", "5/5/1993");
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        JSONObject student2 = new JSONObject();
+        try {
+            student2.put("id", "2");
+            student2.put("name", "NAME OF STUDENT2");
+            student2.put("year", "4rd");
+            student2.put("curriculum", "scicence");
+            student2.put("birthday", "5/5/1993");
+
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+
+        JSONArray jsonArray = new JSONArray();
+
+        jsonArray.put(student1);
+        jsonArray.put(student2);
+
+        JSONObject studentsObj = new JSONObject();
+        try {
+            studentsObj.put("Students", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        String jsonStr = studentsObj.toString();
+        System.out.println("jsonString: "+jsonStr);
+        Log.d("JSON", jsonStr);
+
+
+
     }
 
     private void initialize() {
@@ -102,7 +146,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
     @Override
     public void onClick(View v) {
 
-       // ClientAsyncTask clientAST = new ClientAsyncTask();
+        ClientAsyncTask clientAST = new ClientAsyncTask();
 
         /*
          * TODO
@@ -141,8 +185,61 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 break;
             case R.id.btnMenu:
                 Log.i("Clicked:", btnMenu.toString());
-                Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
+               /* Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
                 startActivity(intentMenu);
+               */
+                JSONObject jsonData = new JSONObject();
+
+                try {
+
+
+
+                    JSONObject student1 = new JSONObject();
+                    try {
+                        student1.put("id", "3");
+                        student1.put("name", "NAME OF STUDENT");
+                        student1.put("year", "3rd");
+                        student1.put("curriculum", "Arts");
+                        student1.put("birthday", "5/5/1993");
+
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                    JSONObject student2 = new JSONObject();
+                    try {
+                        student2.put("id", "2");
+                        student2.put("name", "NAME OF STUDENT2");
+                        student2.put("year", "4rd");
+                        student2.put("curriculum", "scicence");
+                        student2.put("birthday", "5/5/1993");
+
+                    } catch (JSONException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+
+                    JSONArray jsonArray = new JSONArray();
+
+                    jsonArray.put(student1);
+                    jsonArray.put(student2);
+
+                    JSONObject studentsObj = new JSONObject();
+                    studentsObj.put("Students", jsonArray);
+                    studentsObj.put("request", "order");
+                    studentsObj.put("success", "1");
+                    jsonData =studentsObj;
+                   /* jsonData.put("request", "order");
+                    jsonData.put("success", "1");
+                */
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Log.e(TAG, "can't put request");
+                    return;
+                }
+                new SocketServerTask().execute(jsonData);
                 break;
             case R.id.btnLogin:
                 Log.i("Clicked:", btnLogin.toString());
@@ -157,7 +254,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 break;
             case R.id.btnRestaurant:
                 Log.i("Clicked:", btnRestaurant.toString());
-                Intent intentRestaurant = new Intent(MainActivity.this, RestaurantActivity.class);
+                Intent intentRestaurant = new Intent(MainActivityTestJson.this, RestaurantActivity.class);
                 startActivity(intentRestaurant);
                 break;
 
@@ -175,14 +272,14 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
      */
     private void showDialogIp() {
         // Get the layout inflater
-        LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+        LayoutInflater inflater = MainActivityTestJson.this.getLayoutInflater();
 
         ipPrefrence = getApplicationContext().getSharedPreferences("IpData", MODE_PRIVATE);
 
-        final EditText etIP = new EditText(MainActivity.this);
+        final EditText etIP = new EditText(MainActivityTestJson.this);
         etIP.setText(ipPrefrence.getString("ipData",SERVER_IP));
         etIP.setHint(getString(R.string.enter_server_ip));
-        new AlertDialog.Builder(MainActivity.this)
+        new AlertDialog.Builder(MainActivityTestJson.this)
                 .setTitle(getString(R.string.set_ip))
                 .setView(etIP)
                 .setPositiveButton(getString(R.string.set_ip_ok), new DialogInterface.OnClickListener() {
@@ -227,7 +324,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 //Scan Barcode
                 //TODO CALL WAITER
                 Log.i("table res : ", qrResult);
-                Intent intentOrder = new Intent(MainActivity.this, MenuActivity.class);
+                Intent intentOrder = new Intent(MainActivityTestJson.this, MenuActivity.class);
                 startActivity(intentOrder);
             }
         });
@@ -313,58 +410,18 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         integrator.initiateScan();
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState){
-        super.onSaveInstanceState(outState);
-        //save the state of these strings.
-        outState.putString("qrResult", qrResult);
-        outState.putString("qrComplement", qrComplement);
-    }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Log.i("resultCode", "" + resultCode);
-        Log.i("requestCode", "" + requestCode);
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-
-            try {
-
-                String re = scanResult.getContents(); // getScan result
-                Log.i("table", re);
-                qrResult = re;
-                sendRequest();
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-
-    }
-
-    //this method send the request from client
-    private void sendRequest() {
-        //get the qrResult and the qrComplement to create the new JSON
-        jsonData = new JSONObject();
-        jsonDataToSend= new JsonDataToSend(); //instantiate the new JSON object
-        jsonDataToSend.setRequest(qrComplement);
-        jsonDataToSend.setMessage(qrResult);//now the JSON is complete
-        jsonData=jsonDataToSend.getOurJson();// pass the json object to this variable.
-        String jsonStr = jsonData.toString();
-        System.out.println("jsonString: "+jsonStr);
-        Log.d("JSON", jsonStr);
-
-        new SocketServerTask().execute(jsonData);
-
-    }
+    /***
+     *
+     *
+     */
 
 
-    Toast m_currentToast;
 
-    void showToast(String text) {
-        if (m_currentToast != null) {
-            m_currentToast.cancel();
-        }
-        m_currentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
-        m_currentToast.show();
-    }
 
+    /**
+     * AsyncTask which handles the communication with the server
+     */
     class ClientAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
@@ -404,14 +461,48 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
     }
 
 
-    private class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        Log.i("resultCode", "" + resultCode);
+        Log.i("requestCode", "" + requestCode);
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        try {
+            String re = scanResult.getContents(); // getScan result
+            Log.i("table", re);
+            qrResult = re;
+            sendRequest();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //this method send the request from client
+    private void sendRequest() {
+        ClientAsyncTask clientASTx = new ClientAsyncTask();
+        clientASTx.execute(new String[]{SERVER_IP, SERVER_PORT, qrComplement + qrResult}); // Send string "qrComplement+qrResult"
+        qrComplement = ""; // clear qrComplement string
+    }
+
+
+    Toast m_currentToast;
+
+    void showToast(String text) {
+        if (m_currentToast != null) {
+            m_currentToast.cancel();
+        }
+        m_currentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+        m_currentToast.show();
+    }
+
+
+    private class SocketServerTask extends AsyncTask<JSONObject, Void, Void> {
         private JSONObject jsonData;
         private boolean success;
 
         @Override
-        protected String doInBackground(JSONObject... params) {
+        protected Void doInBackground(JSONObject... params) {
             Socket socket = null;
-            String result = null;
             DataInputStream dataInputStream = null;
             DataOutputStream dataOutputStream = null;
             jsonData = params[0];
@@ -429,23 +520,12 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                 Log.i(TAG, "waiting for response from host");
 
                 // Thread will wait till server replies
-                //Buffer the data coming from the input stream
-                BufferedReader br = new BufferedReader(
-                        new InputStreamReader(dataInputStream));
-                //Read data in the input buffer
-                result = br.readLine();
-                //Close the client socket
-                socket.close();
-
-                /*String response = dataInputStream.readUTF();
-                Log.d(TAG,"me esta respondiendo "+response);
+                String response = dataInputStream.readUTF();
                 if (response != null && response.equals("Connection Accepted")) {
                     success = true;
-                    Log.d(TAG,"yeii");
                 } else {
                     success = false;
-                    Log.d(TAG,"not yeii");
-                }*/
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -459,7 +539,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                         socket.close();
                     } catch (IOException e) {
                         e.printStackTrace();
-                        Log.e("ERROR",""+e.toString());
                     }
                 }
 
@@ -469,7 +548,6 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                         dataInputStream.close();
                     } catch (IOException e) {
                         e.printStackTrace();
-                        Log.e("ERROR",""+e.toString());
                     }
                 }
 
@@ -479,23 +557,19 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
                         dataOutputStream.close();
                     } catch (IOException e) {
                         e.printStackTrace();
-                        Log.e("ERROR",""+e.toString());
                     }
                 }
             }
-            Log.d("ServerMessage", ""+result);
-            return result;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(String result) {
-          /*  if (success) {
-                Toast.makeText(MainActivity.this, "Connection Done", Toast.LENGTH_SHORT).show();
+        protected void onPostExecute(Void result) {
+            if (success) {
+                Toast.makeText(MainActivityTestJson.this, "Connection Done", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(MainActivity.this, "Unable to connect", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivityTestJson.this, "Unable to connect", Toast.LENGTH_SHORT).show();
             }
-            */
-            Log.d("ServerMessage", ""+result);
         }
     }
 }
