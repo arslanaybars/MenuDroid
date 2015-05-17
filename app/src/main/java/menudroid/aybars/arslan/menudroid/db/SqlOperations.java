@@ -79,12 +79,7 @@ public class SqlOperations {
                             );
                         }
                     }
-
-
-
                     Log.d(TAG,"total is :"+totalByOrder);
-
-
             }
 
 

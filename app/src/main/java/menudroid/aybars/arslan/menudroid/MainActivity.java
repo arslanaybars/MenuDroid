@@ -99,9 +99,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
        // ClientAsyncTask clientAST = new ClientAsyncTask();
 
         /*
-         * TODO
-         * modified if the user register dont showDialogForBarcode()
-         * if the user not register show till he registered
+         *  Choose buttons
          */
         switch (v.getId()) {
             case R.id.btnOrder:

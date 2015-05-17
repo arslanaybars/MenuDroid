@@ -61,7 +61,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter {
                      public void onClick(View v) {
                                             Log.d("click", "click add for"+food);
 
-                         Toast.makeText(context, "click add", Toast.LENGTH_LONG).show();
+                         //Toast.makeText(context, "click add", Toast.LENGTH_LONG).show();
 
                          sqliteoperation = new SqlOperations(context);
                          sqliteoperation.open();

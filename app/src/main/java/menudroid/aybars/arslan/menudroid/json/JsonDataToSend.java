@@ -1,6 +1,5 @@
 package menudroid.aybars.arslan.menudroid.json;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,8 +9,6 @@ import org.json.JSONObject;
  */
 public class JsonDataToSend {
     private JSONObject jsonData;
-
-
 
     public JsonDataToSend() {
         this.jsonData = new JSONObject();
