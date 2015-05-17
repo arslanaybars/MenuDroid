@@ -1,8 +1,10 @@
 package menudroid.aybars.arslan.menudroid.main;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
@@ -82,38 +84,20 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
 //        //set toolbar
 //        toolbar = (Toolbar) findViewById(R.id.menu_toolbar);
 //        setSupportActionBar(toolbar);
-        getJsonFromWeb(); //with this method I get the json from URL
+       // getJsonFromWeb(); //with this method I get the json from URL
         //createGroupList();
         //createCollection();
 
         expListView = (ExpandableListView) findViewById(R.id.food_list);
-        final MenuExpandableListAdapter expListAdapter = new MenuExpandableListAdapter(this, groupList, menuCollection);
-        expListView.setAdapter(expListAdapter);
+
 
         //float action button
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
         //setGroupIndicatorToRight();
-        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                final String selected = (String) expListAdapter.getChild(groupPosition, childPosition);
-
-                Log.d("jj","paretn is "+parent+
-                        "\n gorup position is "+ groupPosition+
-                        "\n childposition "+ childPosition+
-                        " \n and the id is "+ id);
-
-                /*
-                * Group position is the category (grouplist), example Soup,Breakfast
-                * childposition is the foodname (childList ), example cheese pancake
-                * */
-                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG).show();
-                return true;
-            }
-        });
+        MenuWebTask  serverAsyncTask= new MenuWebTask(c);
+        serverAsyncTask.execute();
 
 
     }
@@ -221,6 +205,8 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
         });
         dialogBuilder.create().show();
     }
+
+
 
 
     private void getJsonFromWeb() {
@@ -453,4 +439,67 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
         m_currentToast.show();
 
     }
+
+
+    class MenuWebTask extends AsyncTask<Void, Void, String> {
+
+        private ProgressDialog pDialog;
+        private Context mContext;
+        private String TAG="MenuWebTask";
+
+        public MenuWebTask(Context context) {
+            mContext = context;
+        }
+
+
+
+        @Override
+        public void onPreExecute(){
+            pDialog = new ProgressDialog(mContext);
+            pDialog.setMessage("Loading menu....");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(false);
+            pDialog.show();
+
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            getJsonFromWeb();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String  result) {
+            pDialog.dismiss();
+
+            final MenuExpandableListAdapter expListAdapter = new MenuExpandableListAdapter(MenuActivity.this, groupList, menuCollection);
+            expListView.setAdapter(expListAdapter);
+            expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+                public boolean onChildClick(ExpandableListView parent, View v,
+                                            int groupPosition, int childPosition, long id) {
+                    final String selected = (String) expListAdapter.getChild(groupPosition, childPosition);
+
+                    Log.d("jj","paretn is "+parent+
+                            "\n gorup position is "+ groupPosition+
+                            "\n childposition "+ childPosition+
+                            " \n and the id is "+ id);
+
+                /*
+                * Group position is the category (grouplist), example Soup,Breakfast
+                * childposition is the foodname (childList ), example cheese pancake
+                * */
+                    Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG).show();
+                    return true;
+                }
+            });
+        }
+
+
+
+    }
+
+
+
 }
