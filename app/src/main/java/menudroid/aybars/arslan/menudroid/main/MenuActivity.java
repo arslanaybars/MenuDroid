@@ -65,13 +65,13 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
     FloatingActionButton fab;
     private JSONObject jsonData;
     private JsonDataToSend jsonDataToSend;
-    private Context c=this;
+    private Context c = this;
 
     private SocketServerTask serverAsyncTask;
 
     private ArrayList<Map<String, String>> ListData;
 
-    private String qrResult,qrComplement;
+    private String qrResult, qrComplement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
 //        //set toolbar
 //        toolbar = (Toolbar) findViewById(R.id.menu_toolbar);
 //        setSupportActionBar(toolbar);
-       // getJsonFromWeb(); //with this method I get the json from URL
+        // getJsonFromWeb(); //with this method I get the json from URL
         //createGroupList();
         //createCollection();
 
@@ -96,30 +96,8 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
         fab.setOnClickListener(this);
 
         //setGroupIndicatorToRight();
-<<<<<<< HEAD
-        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                final String selected = (String) expListAdapter.getChild(groupPosition, childPosition);
-
-                Log.d("list","paretn is "+parent+
-                        "\n gorup position is "+ groupPosition+
-                        "\n childposition "+ childPosition+
-                        " \n and the id is "+ id);
-
-                /*
-                * Group position is the category (grouplist), example Soup,Breakfast
-                * childposition is the foodname (childList ), example cheese pancake
-                * */
-                Toast.makeText(getBaseContext(), selected, Toast.LENGTH_LONG).show();
-                return true;
-            }
-        });
-=======
-        MenuWebTask  serverAsyncTask= new MenuWebTask(c);
+        MenuWebTask serverAsyncTask = new MenuWebTask(c);
         serverAsyncTask.execute();
->>>>>>> 642c4ae36ce95acc162499255fa5dd59aabbc799
 
 
     }
@@ -129,42 +107,38 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
 
         switch (v.getId()) {
             case R.id.fab:
-                try {
-                    showDialogOrder();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                showDialogOrder();
                 break;
 
         }
     }
 
-    private void showDialogOrder() throws JSONException {
+    private void showDialogOrder() {
 
         //here get the order
         sqliteoperation = new SqlOperations(getApplicationContext());
         sqliteoperation.open();
-        final ArrayList<HashMap<String, String>> dictionary =sqliteoperation.getOrder();
+        ArrayList<HashMap<String, String>> dictionary = sqliteoperation.getOrder();
         sqliteoperation.close();
 
-        String totalbyFood,quantity,food_name,messageOrder,price;
-        messageOrder="";
-        float totalbyOrder=0;
+        String totalbyFood, quantity, food_name, messageOrder, price;
+        messageOrder = "\nOrder\nYour ordered";
+        float totalbyOrder = 0;
         int j;
 
-        final JSONArray jsonArray = new JSONArray();
+        JSONArray jsonArray = new JSONArray();
 
         for (int i = 0; i < dictionary.size(); i++) {
 
-            j=i+1;
+            j = i + 1;
             /*I start at index 0 and finish at the penultimate index */
             HashMap<String, String> map = dictionary.get(i); //Get the corresponding map from the index
-            totalbyFood=map.get("totalByFood").toString();
-            price=map.get("price").toString();
-            quantity=map.get("quantity").toString();
-            food_name=map.get("food_name").toString();
-            messageOrder+="\n "+j+" - "+food_name+" ("+price+" $  x  "+ quantity +")  "+ totalbyFood+"$";
-            totalbyOrder+=Float.parseFloat(totalbyFood);
+            totalbyFood = map.get("totalByFood").toString();
+            price = map.get("price").toString();
+            quantity = map.get("quantity").toString();
+            food_name = map.get("food_name").toString();
+            messageOrder += "\n " + j + " - " + food_name + " (" + price + " $  x  " + quantity + ")  " + totalbyFood + "$";
+            totalbyOrder += Float.parseFloat(totalbyFood);
 
 
             JSONObject food = new JSONObject();
@@ -174,6 +148,7 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
                 food.put("quantity", quantity);
                 food.put("food_name", food_name);
             } catch (JSONException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
             jsonArray.put(food);
@@ -190,24 +165,26 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
 
         //get the qrResult and the qrComplement to create the new JSON
         jsonData = new JSONObject();
-        jsonDataToSend= new JsonDataToSend(); //instantiate the new JSON object
+        jsonDataToSend = new JsonDataToSend(); //instantiate the new JSON object
         jsonDataToSend.setRequest("O-");
         jsonDataToSend.setMessage(qrResult);
         jsonDataToSend.setMessageJsonArray(jsonArray);//now the JSON is complete
-        jsonData=jsonDataToSend.getOurJson();// pass the json object to this variable.
+        jsonData = jsonDataToSend.getOurJson();// pass the json object to this variable.
         String jsonStr = jsonData.toString();
-        System.out.println("the json to sent jsonString: "+jsonStr);
+        System.out.println(" the json to sent jsonString: " + jsonStr);
         Log.d("JSON", jsonStr);
+
 
         //new SocketServerTask().execute(jsonData);
 
-        messageOrder+="\n Total = "+totalbyOrder+"$\n Are you sure the ordered them";
+
+        messageOrder += "\n Total = " + totalbyOrder + "$\n Are you sure the ordered them";
 
         AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
         dialogBuilder.setMessage(messageOrder);//R.string.main_order_message)
         dialogBuilder.setTitle(R.string.main_order_title);
 
-        //TODO CLEAN BUTTON
+
         dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -219,16 +196,13 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 showToast("order is ok");
-                    //send order to server
-
-                serverAsyncTask= new SocketServerTask(c);
+                //send order to server
+                serverAsyncTask = new SocketServerTask(c);
                 serverAsyncTask.execute(jsonData);
             }
         });
         dialogBuilder.create().show();
     }
-
-
 
 
     private void getJsonFromWeb() {
@@ -285,7 +259,7 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
                                 String Foodname = FoodNameArray.getJSONObject(j).getString("food");//get the value from key food
                                 String price = FoodNameArray.getJSONObject(j).getString("price");//get the value from key price
                                 Log.d("Food", "The food from category " + categoryName + " is " + Foodname + " this cost : " + price);
-                                childList.add(Foodname+"||"+price); //add the food in the childList
+                                childList.add(Foodname + "||" + price); //add the food in the childList
                             }
                             menuCollection.put(categoryName, childList);
                         }
@@ -347,6 +321,50 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
         return sb.toString();
     }
 
+/*
+    private void createGroupList() {
+        groupList = new ArrayList<String>();
+        groupList.add(getString(R.string.list_breakfast));
+        groupList.add(getString(R.string.list_soup));
+        groupList.add(getString(R.string.list_pancake));
+        groupList.add(getString(R.string.list_main_dish));
+        groupList.add(getString(R.string.list_desert));
+        groupList.add(getString(R.string.list_drinks));
+    }
+*/
+
+/*
+    private void createCollection() {
+        // preparing foods collection(child)
+        String[] breakfastModels = {getString(R.string.food_breakfast), getString(R.string.food_breakfast_ottoman)};
+        String[] soupModels = {getString(R.string.food_tarhana_soup), getString(R.string.food_yayla_soup), getString(R.string.food_akdene_soup),getString(R.string.food_keskek_soup)};
+        String[] pancakeModels = {getString(R.string.food_meat_pancake),getString(R.string.food_meat_pancake),getString(R.string.food_yogurt_pancake),getString(R.string.food_cheese_pancake),getString(R.string.food_potatoes_pancake),getString(R.string.food_spinach_pancake)};
+        String[] mainDishModels = { getString(R.string.food_main_1),getString(R.string.food_main_2),getString(R.string.food_main_3)};
+        String[] desertModels = {getString(R.string.food_desert_1)};
+        String[] drinkModels = {getString(R.string.food_drink_1)};
+        menuCollection = new LinkedHashMap<String, List<String>>();
+        for (String food : groupList) {
+            if (food.equals("Breakfast")) {
+                loadChild(breakfastModels);
+            } else if (food.equals("Soup"))
+                loadChild(soupModels);
+            else if (food.equals("Pancake"))
+                loadChild(pancakeModels);
+            else if (food.equals("Main Dish"))
+                loadChild(mainDishModels);
+            else if (food.equals("Desert"))
+                loadChild(desertModels);
+            else
+                loadChild(drinkModels);
+            menuCollection.put(food, childList);
+        }
+    }
+    private void loadChild(String[] foodModels) {
+        childList = new ArrayList<String>();
+        for (String model : foodModels)
+            childList.add(model);
+    }
+*/
 
     private void setGroupIndicatorToRight() {
         /* Get the screen width */
@@ -374,6 +392,34 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        /*
+        if (id == R.id.action_settings) {
+            showToast("Settings clicked !");
+            return true;
+        }*/
+        //Clicked favorite icon
+        if (id == R.id.action_info) {
+            showToast("info clicked !");
+            //  startActivity(new intent(this, SubActivity.class));
+            return true;
+        }
+        //Clicked share icon
+        if (id == R.id.action_done) {
+            showToast("Done clicked !");
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
     Toast m_currentToast;
 
     //showToast method
@@ -391,16 +437,15 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
 
         private ProgressDialog pDialog;
         private Context mContext;
-        private String TAG="MenuWebTask";
+        private String TAG = "MenuWebTask";
 
         public MenuWebTask(Context context) {
             mContext = context;
         }
 
 
-
         @Override
-        public void onPreExecute(){
+        public void onPreExecute() {
             pDialog = new ProgressDialog(mContext);
             pDialog.setMessage("Loading menu....");
             pDialog.setIndeterminate(false);
@@ -416,7 +461,7 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
         }
 
         @Override
-        protected void onPostExecute(String  result) {
+        protected void onPostExecute(String result) {
             pDialog.dismiss();
 
             final MenuExpandableListAdapter expListAdapter = new MenuExpandableListAdapter(MenuActivity.this, groupList, menuCollection);
@@ -427,10 +472,10 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
                                             int groupPosition, int childPosition, long id) {
                     final String selected = (String) expListAdapter.getChild(groupPosition, childPosition);
 
-                    Log.d("jj","paretn is "+parent+
-                            "\n gorup position is "+ groupPosition+
-                            "\n childposition "+ childPosition+
-                            " \n and the id is "+ id);
+                    Log.d("jj", "paretn is " + parent +
+                            "\n gorup position is " + groupPosition +
+                            "\n childposition " + childPosition +
+                            " \n and the id is " + id);
 
                 /*
                 * Group position is the category (grouplist), example Soup,Breakfast
@@ -441,11 +486,5 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
                 }
             });
         }
-
-
-
     }
-
-
-
 }
