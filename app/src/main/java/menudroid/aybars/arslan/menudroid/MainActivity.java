@@ -362,7 +362,4 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         m_currentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
         m_currentToast.show();
     }
-
-
-
 }
