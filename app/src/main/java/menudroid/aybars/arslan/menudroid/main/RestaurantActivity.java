@@ -1,19 +1,22 @@
 package menudroid.aybars.arslan.menudroid.main;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import menudroid.aybars.arslan.menudroid.R;
 
 public class RestaurantActivity extends ActionBarActivity{
 
-    RestaurantItem itemsData[] = { new RestaurantItem(getString(R.string.res_contact),R.drawable.res_contact),
+   /* RestaurantItem itemsData[] = { new RestaurantItem(getString(R.string.res_contact),R.drawable.res_contact),
             new RestaurantItem(getString(R.string.res_events),R.drawable.res_event),
             new RestaurantItem(getString(R.string.res_reservation),R.drawable.res_reservation),
             new RestaurantItem(getString(R.string.res_work_time),R.drawable.res_work_time),
@@ -23,7 +26,11 @@ public class RestaurantActivity extends ActionBarActivity{
             new RestaurantItem(getString(R.string.res_twitter),R.drawable.res_twitter),
             new RestaurantItem(getString(R.string.res_instagram),R.drawable.res_instagram),
             new RestaurantItem(getString(R.string.res_foursquare),R.drawable.res_foursquare)};
+*/
 
+    ArrayList<RestaurantItem> itemsData;
+
+//RestaurantItem itemsData[] =null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,9 +38,21 @@ public class RestaurantActivity extends ActionBarActivity{
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        itemsData= new ArrayList<RestaurantItem>();
+        itemsData.add( new RestaurantItem(getString(R.string.res_contact),R.drawable.res_contact));
+        itemsData.add( new RestaurantItem(getString(R.string.res_events),R.drawable.res_event));
+        itemsData.add( new RestaurantItem(getString(R.string.res_reservation),R.drawable.res_reservation));
+        itemsData.add( new RestaurantItem(getString(R.string.res_work_time),R.drawable.res_work_time));
+        itemsData.add( new RestaurantItem(getString(R.string.res_survey),R.drawable.res_survey));
+        itemsData.add( new RestaurantItem(getString(R.string.res_gallery),R.drawable.res_gallery));
+        itemsData.add( new RestaurantItem(getString(R.string.res_facebook),R.drawable.res_facebook));
+        itemsData.add( new RestaurantItem(getString(R.string.res_twitter),R.drawable.res_twitter));
+        itemsData.add( new RestaurantItem(getString(R.string.res_instagram),R.drawable.res_instagram));
+        itemsData.add( new RestaurantItem(getString(R.string.res_foursquare),R.drawable.res_foursquare));
 
-        RestaurantAdapter mAdapter = new RestaurantAdapter(itemsData);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Log.d("DATA", "before declare the custom adapter");
+       RestaurantAdapter mAdapter = new RestaurantAdapter(itemsData);
         recyclerView.setAdapter(mAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
