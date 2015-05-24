@@ -7,15 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import menudroid.aybars.arslan.menudroid.R;
 
 /**
  * Created by Aybars on 21.04.2015.
  */
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> {
-    private RestaurantItem[] itemsData;
-
-    public RestaurantAdapter(RestaurantItem[] itemsData) {
+//    private RestaurantItem[] itemsData;
+private ArrayList<RestaurantItem> itemsData;
+    public RestaurantAdapter(ArrayList<RestaurantItem> itemsData) {
         this.itemsData = itemsData;
     }
 
@@ -39,8 +41,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
         // - get data from your itemsData at this position
         // - replace the contents of the view with that itemsData
 
-        viewHolder.txtViewTitle.setText(itemsData[position].getTitle());
-        viewHolder.imgViewIcon.setImageResource(itemsData[position].getImageUrl());
+        viewHolder.txtViewTitle.setText(itemsData.get(position).getTitle());
+        viewHolder.imgViewIcon.setImageResource(itemsData.get(position).getImageUrl());
 
     }
 
@@ -60,6 +62,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     // Return the size of your itemsData (invoked by the layout manager)
     @Override
     public int getItemCount() {
-        return itemsData.length;
+        return itemsData.size();
     }
 }
