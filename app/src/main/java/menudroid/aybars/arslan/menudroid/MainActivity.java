@@ -32,7 +32,7 @@ import menudroid.aybars.arslan.menudroid.main.MenuActivity;
 import menudroid.aybars.arslan.menudroid.main.RestaurantActivity;
 
 
-public class MainActivity extends ActionBarActivity implements OnClickListener {
+public class MainActivity extends ActionBarActivity implements SocketServerTask.OurTaskListener ,OnClickListener {
 
     private Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant; // Define mainactivity buttons
     private ImageView imgSetIP;
@@ -347,7 +347,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
         //Start the AsyncTask execution
         //Accepted client socket object will pass as the parameter
-        serverAsyncTask= new SocketServerTask(c);
+        serverAsyncTask= new SocketServerTask(this,c);
         serverAsyncTask.execute(jsonData);
 
     }
@@ -361,5 +361,25 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         }
         m_currentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
         m_currentToast.show();
+    }
+
+    /* INTERFACE METHODS FROM OurTaskListener-SocketServerTask */
+    @Override
+    public void onOurTaskStarted() {
+
+    }
+
+    @Override
+    public void onOurTaskInProcess() {
+
+    }
+
+    @Override
+    public void onOurTaskFinished(String result) {
+        if(result.equals("Connection Accepted")){
+            showToast("Connection Done");
+        }else{
+            showToast("Unable to connect");
+        }
     }
 }

@@ -43,6 +43,11 @@ public class SqlOperations {
         sqliteconnection.close(); //close db
     }
 
+
+    public void setEmptyOrder(){
+        database.delete("OrderClient", null, null);
+    }
+
     public  ArrayList<HashMap<String,String>>  getOrder (){
 
         Cursor cursor;
