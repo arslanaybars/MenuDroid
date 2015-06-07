@@ -27,12 +27,13 @@ import org.json.JSONObject;
 import java.net.InetAddress;
 
 import menudroid.aybars.arslan.menudroid.asyncs.SocketServerTask;
+import menudroid.aybars.arslan.menudroid.db.SqlOperations;
 import menudroid.aybars.arslan.menudroid.json.JsonDataToSend;
 import menudroid.aybars.arslan.menudroid.main.MenuActivity;
 import menudroid.aybars.arslan.menudroid.main.RestaurantActivity;
 
 
-public class MainActivity extends ActionBarActivity implements OnClickListener {
+public class MainActivity extends ActionBarActivity implements SocketServerTask.OurTaskListener ,OnClickListener {
 
     private Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant; // Define mainactivity buttons
     private ImageView imgSetIP;
@@ -253,8 +254,16 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
     }
 
     private void showDialogBill(){
+
+        //get the total price
+        SqlOperations sqlOperations= new SqlOperations(this);
+        sqlOperations.open();
+        String total=sqlOperations.getTotal();
+        sqlOperations.close();
+
+
         AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
-        dialogBuilder.setMessage(R.string.main_bill_message);
+        dialogBuilder.setMessage("Pay Bill\n total price" + " " + total );
         dialogBuilder.setTitle(R.string.main_bill_title);
 
         dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -274,6 +283,8 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
             }
         });
         dialogBuilder.create().show();
+
+
     }
 
 
@@ -347,7 +358,7 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
 
         //Start the AsyncTask execution
         //Accepted client socket object will pass as the parameter
-        serverAsyncTask= new SocketServerTask(c);
+        serverAsyncTask= new SocketServerTask(this,c);
         serverAsyncTask.execute(jsonData);
 
     }
@@ -361,5 +372,36 @@ public class MainActivity extends ActionBarActivity implements OnClickListener {
         }
         m_currentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
         m_currentToast.show();
+    }
+
+    /* INTERFACE METHODS FROM OurTaskListener-SocketServerTask */
+    @Override
+    public void onOurTaskStarted() {
+
+    }
+
+    @Override
+    public void onOurTaskInProcess() {
+
+    }
+
+    @Override
+    public void onOurTaskFinished(String result) {
+        if(result!=null) {
+            if (result.equals("Connection Accepted")) {
+                showToast("Connection Done");
+                if (qrComplement.equals("B-")) {
+                    //because the consumer said YES to the pay , we will erase the data.
+                    SqlOperations sqlOperations = new SqlOperations(this);
+                    sqlOperations.open();
+                    sqlOperations.setEmptyTotal();
+                    sqlOperations.close();
+                }
+            } else {
+                showToast("Unable to connect");
+            }
+        }else{
+            showToast("Unable to connect");
+        }
     }
 }

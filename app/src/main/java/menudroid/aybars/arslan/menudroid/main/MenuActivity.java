@@ -54,7 +54,7 @@ import menudroid.aybars.arslan.menudroid.db.SqlOperations;
 import menudroid.aybars.arslan.menudroid.json.JsonDataToSend;
 
 
-public class MenuActivity extends ActionBarActivity implements View.OnClickListener {
+public class MenuActivity extends ActionBarActivity implements SocketServerTask.OurTaskListener ,View.OnClickListener {
     private SqlOperations sqliteoperation;
     private Toolbar toolbar;
     List<String> groupList;
@@ -195,9 +195,9 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
         dialogBuilder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                showToast("order is ok");
+              //  showToast("order is ok");
                 //send order to server
-                serverAsyncTask = new SocketServerTask(c);
+                serverAsyncTask = new SocketServerTask(MenuActivity.this,c);
                 serverAsyncTask.execute(jsonData);
             }
         });
@@ -485,6 +485,32 @@ public class MenuActivity extends ActionBarActivity implements View.OnClickListe
                     return true;
                 }
             });
+        }
+    }
+
+
+    /* INTERFACE METHODS FROM OurTaskListener-SocketServerTask */
+    @Override
+    public void onOurTaskStarted() {
+
+    }
+
+    @Override
+    public void onOurTaskInProcess() {
+
+    }
+
+    @Override
+    public void onOurTaskFinished(String result) {
+        if(result.equals("Connection Accepted")){
+            showToast("order is ok");
+            //we could send the order, so we need to empty it.
+            SqlOperations mysqlOperation= new SqlOperations(MenuActivity.this);
+            mysqlOperation.open();
+            mysqlOperation.setEmptyOrder();
+            mysqlOperation.close();
+        }else{
+            showToast("Unable to connect.");
         }
     }
 }

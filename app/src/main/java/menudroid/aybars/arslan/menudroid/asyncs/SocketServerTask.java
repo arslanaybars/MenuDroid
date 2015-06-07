@@ -22,6 +22,7 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
     private String TAG="SocketTAG";
     private static String SERVER_IP = "192.168."; //Define the server port
     private final String SERVER_PORT = "8080"; //Define the server port
+    private final OurTaskListener listener;
 
     private int SocketServerPORT = 8080;
 
@@ -29,12 +30,21 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
         private boolean success;
 
 
-    public SocketServerTask(Context context) {
+    public SocketServerTask(OurTaskListener listener,Context context) {
         this.mContext = context;
+        this.listener = listener;
     }
 
-        @Override
+
+    @Override
+    public void onPreExecute(){
+        listener.onOurTaskStarted();
+    }
+
+
+    @Override
         protected String doInBackground(JSONObject... params) {
+            listener.onOurTaskInProcess();
             Socket socket = null;
             String result = null;
             DataInputStream dataInputStream = null;
@@ -66,16 +76,6 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
                 result = br.readLine();
                 //Close the client socket
                 socket.close();
-
-                /*String response = dataInputStream.readUTF();
-                Log.d(TAG,"me esta respondiendo "+response);
-                if (response != null && response.equals("Connection Accepted")) {
-                    success = true;
-                    Log.d(TAG,"yeii");
-                } else {
-                    success = false;
-                    Log.d(TAG,"not yeii");
-                }*/
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -113,19 +113,21 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
                     }
                 }
             }
-            Log.d("ServerMessage", ""+result);
+           // Log.d("ServerMessage", ""+result);
             return result;
         }
 
         @Override
         protected void onPostExecute(String result) {
-          /*  if (success) {
-                Toast.makeText(MainActivity.this, "Connection Done", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MainActivity.this, "Unable to connect", Toast.LENGTH_SHORT).show();
-            }
-            */
             Log.d("ServerMessage", ""+result);
+            listener.onOurTaskFinished(result);
         }
+
+    public interface OurTaskListener {
+        void onOurTaskStarted();
+        void onOurTaskInProcess();
+        void onOurTaskFinished(String result);
     }
+
+}
 
