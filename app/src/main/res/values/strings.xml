@@ -50,6 +50,7 @@
         order 3 price
         total price
     </string>
+    <string name="main_bill_messageTotal">Pay Bill\ntotal price"</string>
     <string name="main_bill_pay">Pay</string>
 
     <!--Order Dialog-->
