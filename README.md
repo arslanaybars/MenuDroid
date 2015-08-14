@@ -34,3 +34,7 @@ we need a protocal for data communication we will use TCP/IP and after we have g
 * [zxing-android-embedded](https://github.com/journeyapps/zxing-android-embedded)
 
 i need help If you want to join developing time contact with me : arslanaybars@gmail.com
+
+- Developer Team
+[Aybars Arslan](https://github.com/arslanaybars)
+[Rene Soto Lira](https://github.com/reneciokaigen)
