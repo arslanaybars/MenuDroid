@@ -39,4 +39,4 @@ Developer Team
 
 * [Aybars Arslan](https://github.com/arslanaybars)
 
-* [Rene Soto Lira](https://github.com/reneciokaigen)
+* [Rene Soto Lira](https://github.com/renekaigen)
