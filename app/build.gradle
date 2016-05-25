@@ -1,16 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
-
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "menudroid.aybars.arslan.menudroid"
-        minSdkVersion 14
-        targetSdkVersion 21
+        applicationId "com.example.teknopc.myapplication"
+        minSdkVersion 23
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -19,19 +20,13 @@ android {
     }
 }
 
-repositories {
-    mavenCentral()
-
-    maven {
-        url "http://dl.bintray.com/journeyapps/maven"
-    }
-}
-
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.+'
-    //  Material Dialogs -barcode
-    compile 'com.afollestad:material-dialogs:0.6.3.5'
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.8@aar') { transitive = true }
+    compile('com.github.afollestad.material-dialogs:commons:0.8.5.8@aar')
     //  Spinner
     compile 'com.github.navasmdc:MaterialDesign:1.+@aar'
 
@@ -50,4 +45,16 @@ dependencies {
     // This mostly affects encoding, but you should test if you plan to support these versions.
     // Older versions e.g. 2.2 may also work if you need support for older Android versions.
     compile 'com.google.zxing:core:3.0.1'
+
+
+
 }
+
+repositories {
+    mavenCentral()
+
+    maven {
+        url "http://dl.bintray.com/journeyapps/maven"
+    }
+}
+

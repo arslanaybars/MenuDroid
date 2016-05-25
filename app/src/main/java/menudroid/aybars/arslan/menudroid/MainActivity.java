@@ -65,14 +65,16 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
         if( savedInstanceState != null ) {
             //recovering the states
             qrComplement=savedInstanceState.getString("qrComplement");
-            qrResult=savedInstanceState.getString("qrResult");
+            setQrResult(savedInstanceState.getString("qrResult"));
         }
         setContentView(R.layout.activity_main);
 
         // Initalize buttons
         initialize();
     }
-
+    private static void setQrResult(String data) {
+       qrResult=data;
+    }
     private void initialize() {
         btnOrder = (Button) findViewById(R.id.btnOrder);
         btnBill = (Button) findViewById(R.id.btnBill);
@@ -183,7 +185,7 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String ipData = etIP.getEditableText().toString().trim();
-                        SERVER_IP = ipData;
+                        setServerIp(ipData);
                         Editor editor = ipPrefrence.edit();
                         editor.putString("ipData",ipData);
                         editor.commit();
@@ -201,7 +203,9 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
                 .show();
 
     }
-
+    private static void   setServerIp(String ipData){
+        SERVER_IP=ipData;
+    }
     private void showDialogMenu(){
         AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
         dialogBuilder.setMessage(R.string.main_menu_message);
@@ -335,7 +339,7 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
 
                 String re = scanResult.getContents(); // getScan result
                 Log.i("table", re);
-                qrResult = re;
+                setQrResult(re);
                 sendRequest();
             } catch (NullPointerException e) {
                 e.printStackTrace();
