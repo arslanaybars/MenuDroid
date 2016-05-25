@@ -6,6 +6,7 @@ package menudroid.aybars.arslan.menudroid.ui;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import menudroid.aybars.arslan.menudroid.MainActivity;
 import menudroid.aybars.arslan.menudroid.R;
@@ -28,7 +29,7 @@ public class SplashScreen extends ActionBarActivity {
                 try {
                     sleep(1000);// 4 second wait
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Log.d("ERROR",e.toString());
                 } finally {
                     Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                     startActivity(intent);

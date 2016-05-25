@@ -144,8 +144,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
                 food.put("quantity", quantity);
                 food.put("food_name", food_name);
             } catch (JSONException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                Log.d("ERROR",e.toString());
             }
             jsonArray.put(food);
 
@@ -300,12 +299,12 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
                 sb.append(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.d("ERROR",e.toString());
         } finally {
             try {
                 is.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.d("ERROR",e.toString());
             }
         }
         return sb.toString();
