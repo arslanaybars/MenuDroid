@@ -130,7 +130,6 @@ public class SqlOperations {
         Cursor cursorTotal;
         String select = "SELECT total from PriceClient";
         cursorTotal = database.rawQuery(select, null);
-        ContentValues row = new ContentValues();
         if (cursorTotal.getCount() > 0)
         {
             cursorTotal.moveToFirst();

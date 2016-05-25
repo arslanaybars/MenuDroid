@@ -167,8 +167,7 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
      * Dialog for get Server IP
      */
     private void showDialogIp() {
-        // Get the layout inflater
-        LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+
 
         ipPrefrence = getApplicationContext().getSharedPreferences("IpData", MODE_PRIVATE);
 
