@@ -88,15 +88,11 @@ public class SqlOperations {
                 Log.d(TAG, "total is :" + totalByOrder);
                 //save the total in the TableTotal
                 setTotal(totalByOrder);
-
-
             }
 
+        }
+        cursor.close();//It is important close the cursor when you finish your process.
 
-        }
-        if (cursor != null) {
-            cursor.close();//It is important close the cursor when you finish your process.
-        }
 
         return allElementsDictionary;
     }
@@ -117,10 +113,8 @@ public class SqlOperations {
                 int idSum = Integer.parseInt(cursorTotal.getString(0));//get the id from database
                 database.update(SqliteConnection.TABLE_PRICE, row, "_id=" + idSum, null); //update qty DB the request
             }
+            cursorTotal.close();//It is important close the cursor when you finish your process.
 
-            if (cursorTotal != null) {
-                cursorTotal.close();//It is important close the cursor when you finish your process.
-            }
         }
 
     }
@@ -136,9 +130,8 @@ public class SqlOperations {
             cursorTotal.moveToFirst();
            total = cursorTotal.getString(0);//get the total price
         }
-        if (cursorTotal != null) {
-            cursorTotal.close();//It is important close the cursor when you finish your process.
-        }
+        cursorTotal.close();//It is important close the cursor when you finish your process.
+
         return total;
     }
 
@@ -185,11 +178,7 @@ public class SqlOperations {
                     break;
             }
         }
-
-        if (cursor != null) {
-            cursor.close();//It is important close the cursor when you finish your process.
-        }
-
+        cursor.close();//It is important close the cursor when you finish your process.
     }
 
 
