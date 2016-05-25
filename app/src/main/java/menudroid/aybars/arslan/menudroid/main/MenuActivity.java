@@ -133,10 +133,10 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
             j = i + 1;
             /*I start at index 0 and finish at the penultimate index */
             HashMap<String, String> map = dictionary.get(i); //Get the corresponding map from the index
-            totalbyFood = map.get("totalByFood").toString();
-            price = map.get("price").toString();
-            quantity = map.get("quantity").toString();
-            food_name = map.get("food_name").toString();
+            totalbyFood = map.get("totalByFood");
+            price = map.get("price");
+            quantity = map.get("quantity");
+            food_name = map.get("food_name");
             messageOrder += "\n " + j + " - " + food_name + " (" + price + " $  x  " + quantity + ")  " + totalbyFood + "$";
             totalbyOrder += Float.parseFloat(totalbyFood);
 
