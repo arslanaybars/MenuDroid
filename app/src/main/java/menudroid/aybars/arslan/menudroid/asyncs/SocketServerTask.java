@@ -113,7 +113,7 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
                     }
                 }
             }
-           // Log.d("ServerMessage", ""+result);
+
             return result;
         }
 

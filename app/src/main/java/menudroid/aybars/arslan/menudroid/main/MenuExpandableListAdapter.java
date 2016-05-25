@@ -61,33 +61,13 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter {
                      public void onClick(View v) {
                                             Log.d("click", "click add for"+food);
 
-                         //Toast.makeText(context, "click add", Toast.LENGTH_LONG).show();
+
 
                          sqliteoperation = new SqlOperations(context);
                          sqliteoperation.open();
                          sqliteoperation.AddOrSubstractProduct(groupPosition, childPosition,details[0],Float.parseFloat(details[1]),1);
                          sqliteoperation.close();
 
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                builder.setMessage("Do you want to remove?");
-//                builder.setCancelable(false);
-//                builder.setPositiveButton("Yes",
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                List<String> child =
-//                                        menuCollections.get(foods.get(groupPosition));
-//                                child.remove(childPosition);
-//                                notifyDataSetChanged();
-//                            }
-//                        });
-//                builder.setNegativeButton("No",
-//                        new DialogInterface.OnClickListener() {
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                dialog.cancel();
-//                            }
-//                        });
-//                AlertDialog alertDialog = builder.create();
-//                alertDialog.show();
 
             }
         });

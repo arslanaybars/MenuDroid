@@ -15,7 +15,7 @@ import menudroid.aybars.arslan.menudroid.R;
  * Created by Aybars on 21.04.2015.
  */
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> {
-//    private RestaurantItem[] itemsData;
+
 private ArrayList<RestaurantItem> itemsData;
     public RestaurantAdapter(ArrayList<RestaurantItem> itemsData) {
         this.itemsData = itemsData;

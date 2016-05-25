@@ -16,21 +16,11 @@ import menudroid.aybars.arslan.menudroid.R;
 
 public class RestaurantActivity extends ActionBarActivity{
 
-   /* RestaurantItem itemsData[] = { new RestaurantItem(getString(R.string.res_contact),R.drawable.res_contact),
-            new RestaurantItem(getString(R.string.res_events),R.drawable.res_event),
-            new RestaurantItem(getString(R.string.res_reservation),R.drawable.res_reservation),
-            new RestaurantItem(getString(R.string.res_work_time),R.drawable.res_work_time),
-            new RestaurantItem(getString(R.string.res_survey),R.drawable.res_survey),
-            new RestaurantItem(getString(R.string.res_gallery),R.drawable.res_gallery),
-            new RestaurantItem(getString(R.string.res_facebook),R.drawable.res_facebook),
-            new RestaurantItem(getString(R.string.res_twitter),R.drawable.res_twitter),
-            new RestaurantItem(getString(R.string.res_instagram),R.drawable.res_instagram),
-            new RestaurantItem(getString(R.string.res_foursquare),R.drawable.res_foursquare)};
-*/
+
 
     ArrayList<RestaurantItem> itemsData;
 
-//RestaurantItem itemsData[] =null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
