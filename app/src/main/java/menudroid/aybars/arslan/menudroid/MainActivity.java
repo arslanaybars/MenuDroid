@@ -97,7 +97,7 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
     @Override
     public void onClick(View v) {
 
-       // ClientAsyncTask clientAST = new ClientAsyncTask();
+
 
         /*
          *  Choose buttons
@@ -146,7 +146,7 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
                 //Create an instance of AsyncTask
                 //Pass the server ip, port and client message to the AsyncTask
                 //send from barcode reader
-                //clientAST.execute(new String[] {SERVER_IP, SERVER_PORT,qrResult});
+
                 break;
             case R.id.btnRestaurant:
                 Log.i("Clicked:", btnRestaurant.toString());

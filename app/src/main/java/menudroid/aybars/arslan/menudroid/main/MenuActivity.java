@@ -81,12 +81,8 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         qrResult = intent.getStringExtra("qrResult");
         qrComplement = intent.getStringExtra("qrComplement");
 
-//        //set toolbar
-//        toolbar = (Toolbar) findViewById(R.id.menu_toolbar);
-//        setSupportActionBar(toolbar);
-        // getJsonFromWeb(); //with this method I get the json from URL
-        //createGroupList();
-        //createCollection();
+   //set toolbar
+
 
         expListView = (ExpandableListView) findViewById(R.id.food_list);
 
@@ -95,7 +91,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(this);
 
-        //setGroupIndicatorToRight();
+
         MenuWebTask serverAsyncTask = new MenuWebTask(c);
         serverAsyncTask.execute();
 
@@ -154,13 +150,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
             jsonArray.put(food);
 
         }
-      /* JSONObject OrderObj = new JSONObject();
-        try {
-            OrderObj.put("Order", jsonArray);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        */
+
 
 
         //get the qrResult and the qrComplement to create the new JSON
@@ -175,7 +165,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         Log.d("JSON", jsonStr);
 
 
-        //new SocketServerTask().execute(jsonData);
+
 
 
         messageOrder += "\n Total = " + totalbyOrder + "$\n Are you sure the ordered them";
@@ -195,7 +185,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         dialogBuilder.setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-              //  showToast("order is ok");
+
                 //send order to server
                 serverAsyncTask = new SocketServerTask(MenuActivity.this,c);
                 serverAsyncTask.execute(jsonData);
@@ -273,25 +263,25 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         }
         // kind of exceptions.
         catch (UnsupportedEncodingException e) {
-            // e.printStackTrace();
+
             jsonResponse = e.toString();
             Log.d("exception", "" + jsonResponse);
         } catch (ClientProtocolException e) {
-            // e.printStackTrace();
+
             jsonResponse = e.toString();
             Log.d("exception", "" + jsonResponse);
         } catch (ConnectTimeoutException e) {
-            // jsonResponse="-1";
+
             jsonResponse = e.toString();
             Log.d("exception", "" + jsonResponse);
         } catch (SocketTimeoutException e) {
-            // jsonResponse="-1";
+
             jsonResponse = e.toString();
             Log.d("exception", "" + jsonResponse);
         } catch (IOException e) {
             jsonResponse = e.toString();
             Log.d("exception", "" + jsonResponse);
-            // e.printStackTrace();
+
         } catch (Exception e) {
             jsonResponse = e.toString();
             Log.d("exception", "" + jsonResponse);
@@ -321,50 +311,9 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         return sb.toString();
     }
 
-/*
-    private void createGroupList() {
-        groupList = new ArrayList<String>();
-        groupList.add(getString(R.string.list_breakfast));
-        groupList.add(getString(R.string.list_soup));
-        groupList.add(getString(R.string.list_pancake));
-        groupList.add(getString(R.string.list_main_dish));
-        groupList.add(getString(R.string.list_desert));
-        groupList.add(getString(R.string.list_drinks));
-    }
-*/
 
-/*
-    private void createCollection() {
-        // preparing foods collection(child)
-        String[] breakfastModels = {getString(R.string.food_breakfast), getString(R.string.food_breakfast_ottoman)};
-        String[] soupModels = {getString(R.string.food_tarhana_soup), getString(R.string.food_yayla_soup), getString(R.string.food_akdene_soup),getString(R.string.food_keskek_soup)};
-        String[] pancakeModels = {getString(R.string.food_meat_pancake),getString(R.string.food_meat_pancake),getString(R.string.food_yogurt_pancake),getString(R.string.food_cheese_pancake),getString(R.string.food_potatoes_pancake),getString(R.string.food_spinach_pancake)};
-        String[] mainDishModels = { getString(R.string.food_main_1),getString(R.string.food_main_2),getString(R.string.food_main_3)};
-        String[] desertModels = {getString(R.string.food_desert_1)};
-        String[] drinkModels = {getString(R.string.food_drink_1)};
-        menuCollection = new LinkedHashMap<String, List<String>>();
-        for (String food : groupList) {
-            if (food.equals("Breakfast")) {
-                loadChild(breakfastModels);
-            } else if (food.equals("Soup"))
-                loadChild(soupModels);
-            else if (food.equals("Pancake"))
-                loadChild(pancakeModels);
-            else if (food.equals("Main Dish"))
-                loadChild(mainDishModels);
-            else if (food.equals("Desert"))
-                loadChild(desertModels);
-            else
-                loadChild(drinkModels);
-            menuCollection.put(food, childList);
-        }
-    }
-    private void loadChild(String[] foodModels) {
-        childList = new ArrayList<String>();
-        for (String model : foodModels)
-            childList.add(model);
-    }
-*/
+
+
 
     private void setGroupIndicatorToRight() {
         /* Get the screen width */
@@ -399,16 +348,10 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        /*
-        if (id == R.id.action_settings) {
-            showToast("Settings clicked !");
-            return true;
-        }*/
+
         //Clicked favorite icon
         if (id == R.id.action_info) {
             showToast("info clicked !");
-            //  startActivity(new intent(this, SubActivity.class));
             return true;
         }
         //Clicked share icon
