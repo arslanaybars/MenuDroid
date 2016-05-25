@@ -25,6 +25,8 @@ import com.google.zxing.integration.android.IntentResult;
 import org.json.JSONObject;
 
 import java.net.InetAddress;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import menudroid.aybars.arslan.menudroid.asyncs.SocketServerTask;
 import menudroid.aybars.arslan.menudroid.db.SqlOperations;
@@ -338,7 +340,7 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
                 qrResult = re;
                 sendRequest();
             } catch (NullPointerException e) {
-                e.printStackTrace();
+                Log.d("ERROR",e.toString());
             }
 
     }

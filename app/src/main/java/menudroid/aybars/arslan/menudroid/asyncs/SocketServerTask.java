@@ -78,7 +78,7 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
                 socket.close();
 
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e("ERROR",""+e.toString());
                 success = false;
             } finally {
 
@@ -88,7 +88,6 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
                         Log.i(TAG, "closing the socket");
                         socket.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
                         Log.e("ERROR",""+e.toString());
                     }
                 }
@@ -98,7 +97,6 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
                     try {
                         dataInputStream.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
                         Log.e("ERROR",""+e.toString());
                     }
                 }
@@ -108,7 +106,6 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
                     try {
                         dataOutputStream.close();
                     } catch (IOException e) {
-                        e.printStackTrace();
                         Log.e("ERROR",""+e.toString());
                     }
                 }
