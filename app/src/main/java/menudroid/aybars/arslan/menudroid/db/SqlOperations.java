@@ -28,7 +28,7 @@ public class SqlOperations {
     private static final String KEY_QTY = "quantity";
     private static final String KEY_FOOD_NAME = "food_name";
     private static final String KEY_PRICE = "price";
-    private static final String KEY_TOTAL = "total_sum";
+
 
 
     public SqlOperations(Context context) {

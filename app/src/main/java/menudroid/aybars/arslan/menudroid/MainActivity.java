@@ -37,23 +37,13 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
 
     private Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant; // Define mainactivity buttons
     private ImageView imgSetIP;
-    private String TAG="SocketTAG";
+
     private static String SERVER_IP = "192.168."; //Define the server port
-    private final String SERVER_PORT = "8080"; //Define the server port
-
-    private int SocketServerPORT = 8080;
-
     private static String qrResult = "NotFound"; // Define qrCodes string form barcode
     private String qrComplement = ""; // Complement for understanding messafge from order,bill or waiter
 
     SharedPreferences ipPrefrence;
 
-    private String SERVICE_NAME = "Client Device";
-    private String SERVICE_TYPE = "_http._tcp.";
-
-    private InetAddress hostAddress;
-    private int hostPort;
-    private NsdManager mNsdManager;
     private JSONObject jsonData;
     private JsonDataToSend jsonDataToSend;
     private Context c=this;

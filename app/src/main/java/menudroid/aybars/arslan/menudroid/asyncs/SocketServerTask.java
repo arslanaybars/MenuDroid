@@ -18,16 +18,16 @@ import java.net.Socket;
  * Created by renesotolira on 26/04/15.
  */
 public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
-   private Context mContext;
+    private Context mContext;
     private String TAG="SocketTAG";
-    private static String SERVER_IP = "192.168."; //Define the server port
-    private final String SERVER_PORT = "8080"; //Define the server port
+
+
     private final OurTaskListener listener;
 
     private int SocketServerPORT = 8080;
 
-        private JSONObject jsonData;
-        private boolean success;
+    private JSONObject jsonData;
+    private boolean success;
 
 
     public SocketServerTask(OurTaskListener listener,Context context) {
