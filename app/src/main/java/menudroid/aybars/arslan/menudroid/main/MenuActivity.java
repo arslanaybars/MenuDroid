@@ -56,7 +56,7 @@ import menudroid.aybars.arslan.menudroid.json.JsonDataToSend;
 
 public class MenuActivity extends ActionBarActivity implements SocketServerTask.OurTaskListener ,View.OnClickListener {
     private SqlOperations sqliteoperation;
-    private Toolbar toolbar;
+
     List<String> groupList;
     List<String> childList;
     Map<String, List<String>> menuCollection;
@@ -69,7 +69,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
 
     private SocketServerTask serverAsyncTask;
 
-    private ArrayList<Map<String, String>> ListData;
+
 
     private String qrResult, qrComplement;
 
@@ -437,7 +437,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
 
         private ProgressDialog pDialog;
         private Context mContext;
-        private String TAG = "MenuWebTask";
+
 
         public MenuWebTask(Context context) {
             mContext = context;

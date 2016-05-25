@@ -13,12 +13,7 @@ public class SqliteConnection  extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "OrderClient";
     public static final String TABLE_PRICE = "PriceClient";
     private static final int DATABASE_VERSION = 1;
-    private static final String KEY_INDEX_CATEGORY = "index_category";
-    private static final String KEY_INDEX_FOOD = "index_food";
-    private static final String KEY_FOOD_NAME = "food_name";
-    private static final String KEY_QTY = "quantity";
-    private static final String KEY_PRICE = "price";
-    private static final String KEY_TOTAL = "total_sum";
+
     String sqlCreateTableOrder= "CREATE TABLE OrderClient (_id INTEGER PRIMARY KEY, index_category INTEGER, index_food INTEGER, quantity INTEGER, price TEXT, food_name TEXT)";
 
     String sqlCreateTableTotal= "CREATE TABLE PriceClient (_id INTEGER PRIMARY KEY, total TEXT)";
