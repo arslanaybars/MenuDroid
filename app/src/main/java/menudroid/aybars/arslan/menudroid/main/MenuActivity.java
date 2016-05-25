@@ -106,7 +106,8 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
             case R.id.fab:
                 showDialogOrder();
                 break;
-
+            default:
+                break;
         }
     }
 

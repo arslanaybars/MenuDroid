@@ -175,6 +175,8 @@ public class SqlOperations {
                         row.put(KEY_QTY, oldQty - 1);//substract -1 if the qty is greater than 0,
                     database.update(SqliteConnection.TABLE_NAME, row, "_id=" + idSum, null); //update qty DB the request
                     break;
+                default:
+                    break;
             }
         }
         cursor.close();//It is important close the cursor when you finish your process.
