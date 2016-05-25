@@ -158,6 +158,8 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
                 Log.i("Clicked:", imgSetIP.toString());
                 showDialogIp();//Define the IP change dialog
                 break;
+            default:
+                break;
         }
 
     }
