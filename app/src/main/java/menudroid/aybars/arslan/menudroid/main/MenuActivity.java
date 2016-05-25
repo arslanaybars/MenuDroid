@@ -71,7 +71,8 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
 
     private ArrayList<Map<String, String>> ListData;
 
-    private String qrResult, qrComplement;
+    private String qrResult;
+    private String qrComplement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +122,11 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         ArrayList<HashMap<String, String>> dictionary = sqliteoperation.getOrder();
         sqliteoperation.close();
 
-        String totalbyFood, quantity, food_name, messageOrder, price;
+        String totalbyFood;
+        String quantity;
+        String food_name;
+        String messageOrder;
+        String price;
         messageOrder = "\nOrder\nYour ordered";
         float totalbyOrder = 0;
         int j;

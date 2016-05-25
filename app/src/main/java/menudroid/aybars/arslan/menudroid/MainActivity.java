@@ -34,8 +34,13 @@ import menudroid.aybars.arslan.menudroid.main.RestaurantActivity;
 
 
 public class MainActivity extends ActionBarActivity implements SocketServerTask.OurTaskListener ,OnClickListener {
-
-    private Button btnOrder, btnBill, btnWaiter, btnMenu, btnLogin, btnRestaurant; // Define mainactivity buttons
+    // Define mainactivity buttons
+    private Button btnOrder;
+    private Button btnBill;
+    private Button btnWaiter;
+    private Button btnMenu;
+    private Button btnLogin;
+    private Button btnRestaurant;
     private ImageView imgSetIP;
     private String TAG="SocketTAG";
     private static String SERVER_IP = "192.168."; //Define the server port
