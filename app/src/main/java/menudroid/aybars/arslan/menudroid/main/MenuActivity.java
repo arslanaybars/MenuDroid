@@ -55,6 +55,10 @@ import menudroid.aybars.arslan.menudroid.json.JsonDataToSend;
 
 
 public class MenuActivity extends ActionBarActivity implements SocketServerTask.OurTaskListener ,View.OnClickListener {
+
+    private static final String EXCEPT = "Exception";
+    private static final String ERROR = "ERROR";
+    private static final String PRICE = "Price";
     private SqlOperations sqliteoperation;
 
     List<String> groupList;
@@ -136,7 +140,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
             /*I start at index 0 and finish at the penultimate index */
             HashMap<String, String> map = dictionary.get(i); //Get the corresponding map from the index
             totalbyFood = map.get("totalByFood");
-            price = map.get("price");
+            price = map.get(PRICE);
             quantity = map.get("quantity");
             food_name = map.get("food_name");
             messageOrder += "\n " + j + " - " + food_name + " (" + price + " $  x  " + quantity + ")  " + totalbyFood + "$";
@@ -146,11 +150,11 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
             JSONObject food = new JSONObject();
             try {
                 food.put("totalByFood", totalbyFood);
-                food.put("price", price);
+                food.put(PRICE, price);
                 food.put("quantity", quantity);
                 food.put("food_name", food_name);
             } catch (JSONException e) {
-                Log.d("ERROR",e.toString());
+                Log.d(ERROR,e.toString());
             }
             jsonArray.put(food);
 
@@ -252,7 +256,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
 
                             for (int j = 0; j < FoodNameArray.length(); j++) {
                                 String Foodname = FoodNameArray.getJSONObject(j).getString("food");//get the value from key food
-                                String price = FoodNameArray.getJSONObject(j).getString("price");//get the value from key price
+                                String price = FoodNameArray.getJSONObject(j).getString(PRICE);//get the value from key price
                                 Log.d("Food", "The food from category " + categoryName + " is " + Foodname + " this cost : " + price);
                                 childList.add(Foodname + "||" + price); //add the food in the childList
                             }
@@ -263,33 +267,33 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
 
             } catch (JSONException e) {
                 jsonResponse = e.toString();
-                Log.d("exception", "" + jsonResponse);
+                Log.d(EXCEPT, "" + jsonResponse);
             }
         }
         // kind of exceptions.
         catch (UnsupportedEncodingException e) {
 
             jsonResponse = e.toString();
-            Log.d("exception", "" + jsonResponse);
+            Log.d(EXCEPT, "" + jsonResponse);
         } catch (ClientProtocolException e) {
 
             jsonResponse = e.toString();
-            Log.d("exception", "" + jsonResponse);
+            Log.d(EXCEPT, "" + jsonResponse);
         } catch (ConnectTimeoutException e) {
 
             jsonResponse = e.toString();
-            Log.d("exception", "" + jsonResponse);
+            Log.d(EXCEPT, "" + jsonResponse);
         } catch (SocketTimeoutException e) {
 
             jsonResponse = e.toString();
-            Log.d("exception", "" + jsonResponse);
+            Log.d(EXCEPT, "" + jsonResponse);
         } catch (IOException e) {
             jsonResponse = e.toString();
-            Log.d("exception", "" + jsonResponse);
+            Log.d(EXCEPT, "" + jsonResponse);
 
         } catch (Exception e) {
             jsonResponse = e.toString();
-            Log.d("exception", "" + jsonResponse);
+            Log.d(EXCEPT, "" + jsonResponse);
         }
     }
 
@@ -305,12 +309,12 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
                 sb.append(line);
             }
         } catch (IOException e) {
-            Log.d("ERROR",e.toString());
+            Log.d(ERROR,e.toString());
         } finally {
             try {
                 is.close();
             } catch (IOException e) {
-                Log.d("ERROR",e.toString());
+                Log.d(ERROR,e.toString());
             }
         }
         return sb.toString();

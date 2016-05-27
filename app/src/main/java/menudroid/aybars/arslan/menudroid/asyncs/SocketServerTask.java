@@ -20,7 +20,7 @@ import java.net.Socket;
 public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
     private Context mContext;
     private String TAG="SocketTAG";
-
+    private static final String ERROR = "ERROR";
 
     private final OurTaskListener listener;
 
@@ -78,7 +78,7 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
                 socket.close();
 
             } catch (IOException e) {
-                Log.e("ERROR",""+e.toString());
+                Log.e(ERROR,""+e.toString());
                 success = false;
             } finally {
 
@@ -88,7 +88,7 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
                         Log.i(TAG, "closing the socket");
                         socket.close();
                     } catch (IOException e) {
-                        Log.e("ERROR",""+e.toString());
+                        Log.e(ERROR,""+e.toString());
                     }
                 }
 
@@ -97,7 +97,7 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
                     try {
                         dataInputStream.close();
                     } catch (IOException e) {
-                        Log.e("ERROR",""+e.toString());
+                        Log.e(ERROR,""+e.toString());
                     }
                 }
 
@@ -106,7 +106,7 @@ public class SocketServerTask extends AsyncTask<JSONObject, Void, String> {
                     try {
                         dataOutputStream.close();
                     } catch (IOException e) {
-                        Log.e("ERROR",""+e.toString());
+                        Log.e(ERROR,""+e.toString());
                     }
                 }
             }
