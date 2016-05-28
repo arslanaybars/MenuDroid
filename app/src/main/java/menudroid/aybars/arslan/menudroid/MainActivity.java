@@ -48,7 +48,11 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
     private static String SERVER_IP = "192.168."; //Define the server port
     private static String qrResult = "NotFound"; // Define qrCodes string form barcode
     private String qrComplement = ""; // Complement for understanding messafge from order,bill or waiter
-
+    private static final String QR_RESULT = "NotFound";
+    private static final String CLICKED = "Clicked:";
+    private static final String TABLE_RES = "table res : ";
+    private static final String QR_COMPLEMENT = "qrComplement";
+    private static final String QR_RES = "qrResult";
     SharedPreferences ipPrefrence;
 
     private JSONObject jsonData;
@@ -61,8 +65,8 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
         super.onCreate(savedInstanceState);
         if( savedInstanceState != null ) {
             //recovering the states
-            qrComplement=savedInstanceState.getString("qrComplement");
-            setQrResult(savedInstanceState.getString("qrResult"));
+            qrComplement=savedInstanceState.getString(QR_COMPLEMENT);
+            setQrResult(savedInstanceState.getString(QR_RES));
         }
         setContentView(R.layout.activity_main);
 
@@ -103,41 +107,41 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
          */
         switch (v.getId()) {
             case R.id.btnOrder:
-                Log.i("Clicked:", btnOrder.toString());
+                Log.i(CLICKED, btnOrder.toString());
                 qrComplement = "O-";
-                if(qrResult == null || qrResult == "NotFound" )
+                if(qrResult == null || qrResult == QR_RESULT )
                     showDialogForBarcode();
                 else
                     showDialogMenu();
 
                 break;
             case R.id.btnBill:
-                Log.i("Clicked:", btnBill.toString());
+                Log.i(CLICKED, btnBill.toString());
                 qrComplement = "B-";
-                if(qrResult == null || qrResult == "NotFound" )
+                if(qrResult == null || qrResult == QR_RESULT )
                     showDialogForBarcode();
                 else
                     showDialogBill();
 //              need a dialog for ask you sure ? dialog have price and question
                 break;
             case R.id.btnWaiter:
-                Log.i("Clicked:", btnWaiter.toString());
+                Log.i(CLICKED, btnWaiter.toString());
                 qrComplement = "W-";
                 //TODO session
                 //if statemant check the already table register or nor
-                if(qrResult == null || qrResult == "NotFound" )
+                if(qrResult == null || qrResult == QR_RESULT )
                     showDialogForBarcode();
                 else
                     showDialogWaiter();
 //              need a dialog for ask you sure ?
                 break;
             case R.id.btnMenu:
-                Log.i("Clicked:", btnMenu.toString());
+                Log.i(CLICKED, btnMenu.toString());
                 Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
                 startActivity(intentMenu);
                 break;
             case R.id.btnLogin:
-                Log.i("Clicked:", btnLogin.toString());
+                Log.i(CLICKED, btnLogin.toString());
                 //L- means, the user register the table
                 qrComplement = "L-";
                 scanBarcode();
@@ -148,13 +152,13 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
 
                 break;
             case R.id.btnRestaurant:
-                Log.i("Clicked:", btnRestaurant.toString());
+                Log.i(CLICKED, btnRestaurant.toString());
                 Intent intentRestaurant = new Intent(MainActivity.this, RestaurantActivity.class);
                 startActivity(intentRestaurant);
                 break;
 
             case R.id.imgSetIP:
-                Log.i("Clicked:", imgSetIP.toString());
+                Log.i(CLICKED, imgSetIP.toString());
                 showDialogIp();//Define the IP change dialog
                 break;
             default:
@@ -221,10 +225,10 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
             public void onClick(DialogInterface dialog, int which) {
                 //Scan Barcode
                 //TODO CALL WAITER
-                Log.i("table res : ", qrResult);
+                Log.i(TABLE_RES, qrResult);
                 Intent intentOrder = new Intent(MainActivity.this, MenuActivity.class);
-                intentOrder.putExtra("qrResult", qrResult);
-                intentOrder.putExtra("qrComplement", qrComplement);
+                intentOrder.putExtra(QR_RES, qrResult);
+                intentOrder.putExtra(QR_COMPLEMENT, qrComplement);
                 startActivity(intentOrder);
             }
         });
@@ -248,7 +252,7 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
             public void onClick(DialogInterface dialog, int which) {
                 //Scan Barcode
                 //TODO CALL WAITER
-                Log.i("table res : ", qrResult);
+                Log.i(TABLE_RES, qrResult);
                 sendRequest();
             }
         });
@@ -280,7 +284,7 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
             public void onClick(DialogInterface dialog, int which) {
                 //Scan Barcode
                 //TODO Text all order and total price
-                Log.i("table res : ", qrResult);
+                Log.i(TABLE_RES, qrResult);
                 sendRequest();
             }
         });
@@ -324,8 +328,8 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
     public void onSaveInstanceState(Bundle outState){
         super.onSaveInstanceState(outState);
         //save the state of these strings.
-        outState.putString("qrResult", qrResult);
-        outState.putString("qrComplement", qrComplement);
+        outState.putString(QR_RES, qrResult);
+        outState.putString(QR_COMPLEMENT, qrComplement);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
