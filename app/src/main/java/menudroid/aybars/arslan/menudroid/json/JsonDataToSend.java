@@ -19,6 +19,7 @@ public class JsonDataToSend {
            jsonData.put("request", request);
        } catch (JSONException e) {
            e.printStackTrace();
+           throw new RuntimeException(e);
        }
    }
 
@@ -27,6 +28,7 @@ public class JsonDataToSend {
             jsonData.put("messageArray", messageArray);
         } catch (JSONException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
     public void setMessage(String message){
@@ -34,6 +36,7 @@ public class JsonDataToSend {
             jsonData.put("message", message);
         } catch (JSONException e) {
             e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 
