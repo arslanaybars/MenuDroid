@@ -384,12 +384,12 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
     /* INTERFACE METHODS FROM OurTaskListener-SocketServerTask */
     @Override
     public void onOurTaskStarted() {
-
+        throw new UnsupportedOperationException("This method is not implemented yet.");
     }
 
     @Override
     public void onOurTaskInProcess() {
-
+        throw new UnsupportedOperationException("This method is not implemented yet.");
     }
 
     @Override
