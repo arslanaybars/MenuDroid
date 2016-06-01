@@ -155,6 +155,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
                 food.put("food_name", food_name);
             } catch (JSONException e) {
                 Log.d(ERROR,e.toString());
+                throw new RuntimeException(e);
             }
             jsonArray.put(food);
 
@@ -279,10 +280,12 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
 
             jsonResponse = e.toString();
             Log.d(EXCEPT, "" + jsonResponse);
+            throw new RuntimeException(e);
         } catch (ConnectTimeoutException e) {
 
             jsonResponse = e.toString();
             Log.d(EXCEPT, "" + jsonResponse);
+            throw new RuntimeException(e);
         } catch (SocketTimeoutException e) {
 
             jsonResponse = e.toString();
@@ -290,10 +293,12 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         } catch (IOException e) {
             jsonResponse = e.toString();
             Log.d(EXCEPT, "" + jsonResponse);
+            throw new RuntimeException(e);
 
         } catch (Exception e) {
             jsonResponse = e.toString();
             Log.d(EXCEPT, "" + jsonResponse);
+            throw new RuntimeException(e);
         }
     }
 
@@ -310,11 +315,13 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
             }
         } catch (IOException e) {
             Log.d(ERROR,e.toString());
+            throw new RuntimeException(e);
         } finally {
             try {
                 is.close();
             } catch (IOException e) {
                 Log.d(ERROR,e.toString());
+                throw new RuntimeException(e);
             }
         }
         return sb.toString();

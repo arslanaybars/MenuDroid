@@ -345,6 +345,7 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
                 sendRequest();
             } catch (NullPointerException e) {
                 Log.d("ERROR",e.toString());
+                throw new RuntimeException(e);
             }
 
     }
