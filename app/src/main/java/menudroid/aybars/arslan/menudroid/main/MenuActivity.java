@@ -120,7 +120,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         //here get the order
         sqliteoperation = new SqlOperations(getApplicationContext());
         sqliteoperation.open();
-        ArrayList<HashMap<String, String>> dictionary = sqliteoperation.getOrder();
+        List<HashMap<String, String>> dictionary = sqliteoperation.getOrder();
         sqliteoperation.close();
 
         String totalbyFood;

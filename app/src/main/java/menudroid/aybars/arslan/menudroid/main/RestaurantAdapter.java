@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import menudroid.aybars.arslan.menudroid.R;
 
@@ -16,8 +17,8 @@ import menudroid.aybars.arslan.menudroid.R;
  */
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> {
 
-private ArrayList<RestaurantItem> itemsData;
-    public RestaurantAdapter(ArrayList<RestaurantItem> itemsData) {
+    private List<RestaurantItem> itemsData = new ArrayList<RestaurantItem>();
+    public RestaurantAdapter(List<RestaurantItem> itemsData) {
         this.itemsData = itemsData;
     }
 
