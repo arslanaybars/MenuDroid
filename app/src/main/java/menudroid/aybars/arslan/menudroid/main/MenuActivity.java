@@ -171,20 +171,11 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         jsonDataToSend.setMessageJsonArray(jsonArray);//now the JSON is complete
         jsonData = jsonDataToSend.getOurJson();// pass the json object to this variable.
         String jsonStr = jsonData.toString();
-        System.out.println(" the json to sent jsonString: " + jsonStr);
         Log.d("JSON", jsonStr);
-
-
-
-
-
         messageOrder += "\n Total = " + totalbyOrder + "$\n Are you sure the ordered them";
-
         AlertDialogWrapper.Builder dialogBuilder = new AlertDialogWrapper.Builder(this);
         dialogBuilder.setMessage(messageOrder);//R.string.main_order_message)
         dialogBuilder.setTitle(R.string.main_order_title);
-
-
         dialogBuilder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
