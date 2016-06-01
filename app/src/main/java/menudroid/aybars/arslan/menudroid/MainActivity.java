@@ -358,10 +358,7 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
         jsonDataToSend.setMessage(qrResult);//now the JSON is complete
         jsonData=jsonDataToSend.getOurJson();// pass the json object to this variable.
         String jsonStr = jsonData.toString();
-        System.out.println("jsonString: "+jsonStr);
         Log.d("JSON", jsonStr);
-
-
         //Start the AsyncTask execution
         //Accepted client socket object will pass as the parameter
         serverAsyncTask= new SocketServerTask(this,c);
