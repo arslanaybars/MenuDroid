@@ -50,8 +50,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
     // inner class to hold a reference to each item of RecyclerView
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView txtViewTitle;
-        public ImageView imgViewIcon;
+        private TextView txtViewTitle;
+        private ImageView imgViewIcon;
 
         public ViewHolder(View itemLayoutView) {
             super(itemLayoutView);
