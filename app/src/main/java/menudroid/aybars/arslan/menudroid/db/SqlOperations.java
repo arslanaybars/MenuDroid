@@ -10,6 +10,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Clase para manipular las operaciones simples con db local como son insert,delete,update,etc
@@ -51,10 +52,10 @@ public class SqlOperations {
         database.delete("PriceClient", null, null);
     }
 
-    public ArrayList<HashMap<String, String>> getOrder() {
+    public List<HashMap<String, String>> getOrder() {
 
         Cursor cursor;
-        ArrayList<HashMap<String, String>> allElementsDictionary = new ArrayList<HashMap<String, String>>();
+        List<HashMap<String, String>> allElementsDictionary = new ArrayList<HashMap<String, String>>();
         String select = "SELECT quantity,price,food_name from OrderClient";
         cursor = database.rawQuery(select, null);
         if (cursor.getCount() == 0) // if there are no elements do nothing
