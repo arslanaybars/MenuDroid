@@ -51,12 +51,12 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter {
         TextView item = (TextView) convertView.findViewById(R.id.child_food);
         TextView price = (TextView) convertView.findViewById(R.id.item_price);
 
-        ImageView item_add = (ImageView) convertView.findViewById(R.id.item_add);
-        ImageView item_remove = (ImageView) convertView.findViewById(R.id.item_remove);
+        ImageView itemAdd = (ImageView) convertView.findViewById(R.id.item_add);
+        ImageView itemRemove = (ImageView) convertView.findViewById(R.id.item_remove);
 
         final String []details=food.split("\\|\\|");
 
-        item_add.setOnClickListener(new OnClickListener() {
+        itemAdd.setOnClickListener(new OnClickListener() {
 
                      public void onClick(View v) {
                                             Log.d("click", "click add for"+food);
@@ -72,7 +72,7 @@ public class MenuExpandableListAdapter extends BaseExpandableListAdapter {
             }
         });
 
-        item_remove.setOnClickListener(new OnClickListener() {
+        itemRemove.setOnClickListener(new OnClickListener() {
 
             public void onClick(View v) {
                 Log.d("click", "click remove for"+food);

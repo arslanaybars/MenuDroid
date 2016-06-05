@@ -136,7 +136,7 @@ public class SqlOperations {
     }
 
 
-    public void AddOrSubstractProduct(int category_index, int food_index, String food, float price, int kindOperation) {
+    public void AddOrSubstractProduct(int categoryIndex, int foodIndex, String food, float price, int kindOperation) {
         /* kind Operation = add or Subtract
          1= add
          2= substract
@@ -144,14 +144,14 @@ public class SqlOperations {
 
      /*NOTE when you close the Session we have to delete this data to create a new order*/
         Cursor cursor;
-        String select = "SELECT quantity,_id FROM OrderClient where " + KEY_INDEX_CATEGORY + "=" + category_index +
-                " and " + KEY_INDEX_FOOD + "=" + food_index;
+        String select = "SELECT quantity,_id FROM OrderClient where " + KEY_INDEX_CATEGORY + "=" + categoryIndex +
+                " and " + KEY_INDEX_FOOD + "=" + foodIndex;
         cursor = database.rawQuery(select, null);
         if (cursor.getCount() == 0 && kindOperation == 1) // if there are no elements and the operation is ADD , set QTY in  1
         {
             ContentValues row = new ContentValues();
-            row.put(KEY_INDEX_CATEGORY, category_index);
-            row.put(KEY_INDEX_FOOD, food_index);
+            row.put(KEY_INDEX_CATEGORY, categoryIndex);
+            row.put(KEY_INDEX_FOOD, foodIndex);
             row.put(KEY_QTY, 1);
             row.put(KEY_FOOD_NAME, food);
             row.put(KEY_PRICE, String.valueOf(price));

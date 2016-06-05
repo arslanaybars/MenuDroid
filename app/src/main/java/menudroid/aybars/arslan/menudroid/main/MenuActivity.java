@@ -126,7 +126,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
 
         String totalbyFood;
         String quantity;
-        String food_name;
+        String foodName;
         String messageOrder;
         String price;
         messageOrder = "\nOrder\nYour ordered";
@@ -143,8 +143,8 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
             totalbyFood = map.get("totalByFood");
             price = map.get(PRICE);
             quantity = map.get("quantity");
-            food_name = map.get("food_name");
-            messageOrder += "\n " + j + " - " + food_name + " (" + price + " $  x  " + quantity + ")  " + totalbyFood + "$";
+            foodName = map.get("food_name");
+            messageOrder += "\n " + j + " - " + foodName + " (" + price + " $  x  " + quantity + ")  " + totalbyFood + "$";
             totalbyOrder += Float.parseFloat(totalbyFood);
 
 
@@ -153,7 +153,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
                 food.put("totalByFood", totalbyFood);
                 food.put(PRICE, price);
                 food.put("quantity", quantity);
-                food.put("food_name", food_name);
+                food.put("food_name", foodName);
             } catch (JSONException e) {
                 Log.d(ERROR,e.toString());
                 throw new RuntimeException(e);
@@ -244,14 +244,14 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
                             String categoryName = CategoriesArray.getJSONObject(i).getString("name");
                             groupList.add(categoryName); //add to the  groupList
                             Log.d("CATEGORY", "The category is " + categoryName);
-                            JSONArray FoodNameArray = new JSONArray(CategoriesArray.getJSONObject(i).getString("content"));
+                            JSONArray foodNameArray = new JSONArray(CategoriesArray.getJSONObject(i).getString("content"));
                             childList = new ArrayList<String>();
 
-                            for (int j = 0; j < FoodNameArray.length(); j++) {
-                                String Foodname = FoodNameArray.getJSONObject(j).getString("food");//get the value from key food
-                                String price = FoodNameArray.getJSONObject(j).getString(PRICE);//get the value from key price
-                                Log.d("Food", "The food from category " + categoryName + " is " + Foodname + " this cost : " + price);
-                                childList.add(Foodname + "||" + price); //add the food in the childList
+                            for (int j = 0; j < foodNameArray.length(); j++) {
+                                String foodname = foodNameArray.getJSONObject(j).getString("food");//get the value from key food
+                                String price = foodNameArray.getJSONObject(j).getString(PRICE);//get the value from key price
+                                Log.d("Food", "The food from category " + categoryName + " is " + foodname + " this cost : " + price);
+                                childList.add(foodname + "||" + price); //add the food in the childList
                             }
                             menuCollection.put(categoryName, childList);
                         }
