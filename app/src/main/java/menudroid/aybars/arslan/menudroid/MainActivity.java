@@ -353,8 +353,8 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Log.i("resultCode", "" + resultCode);
-        Log.i("requestCode", "" + requestCode);
+        Log.i("resultCode", Integer.toString(resultCode));
+        Log.i("requestCode",  Integer.toString(requestCode));
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
             try {
