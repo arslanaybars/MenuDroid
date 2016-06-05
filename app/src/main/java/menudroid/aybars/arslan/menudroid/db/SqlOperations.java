@@ -55,7 +55,7 @@ public class SqlOperations {
     public List<HashMap<String, String>> getOrder() {
 
         Cursor cursor;
-        List<HashMap<String, String>> allElementsDictionary = new ArrayList<HashMap<String, String>>();
+        List<HashMap<String, String>> allElementsDictionary = new ArrayList<>();
         String select = "SELECT quantity,price,food_name from OrderClient";
         cursor = database.rawQuery(select, null);
         if (cursor.getCount() == 0) // if there are no elements do nothing
@@ -72,7 +72,7 @@ public class SqlOperations {
                 if (qty > 0) {
                     float totalByFood = Float.parseFloat(cursor.getString(0)) * Float.parseFloat(cursor.getString(1));// qty * price
                     totalByOrder += totalByFood;
-                    HashMap<String, String> map = new HashMap<String, String>();
+                    HashMap<String, String> map = new HashMap<>();
                     map.put("totalByFood", String.valueOf(totalByFood));
                     map.put(KEY_QTY, cursor.getString(0));
                     map.put(KEY_PRICE, cursor.getString(1));

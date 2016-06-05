@@ -28,7 +28,7 @@ public class RestaurantActivity extends ActionBarActivity{
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        itemsData= new ArrayList<RestaurantItem>();
+        itemsData= new ArrayList<>();
         itemsData.add( new RestaurantItem(getString(R.string.res_contact),R.drawable.res_contact));
         itemsData.add( new RestaurantItem(getString(R.string.res_events),R.drawable.res_event));
         itemsData.add( new RestaurantItem(getString(R.string.res_reservation),R.drawable.res_reservation));

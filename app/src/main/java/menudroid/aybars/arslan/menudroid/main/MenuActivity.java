@@ -198,8 +198,8 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
 
 
     private void getJsonFromWeb() {
-        menuCollection = new LinkedHashMap<String, List<String>>();
-        groupList = new ArrayList<String>();
+        menuCollection = new LinkedHashMap<>();
+        groupList = new ArrayList<>();
 
         /* It would be better if  this process will be in a Thread.*/
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -216,7 +216,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         * click at RAW option to get the url from HttPost method   
         * */
         try {
-            List<NameValuePair> postValues = new ArrayList<NameValuePair>();
+            List<NameValuePair> postValues = new ArrayList<>();
             httppost.setEntity(new UrlEncodedFormEntity(postValues));
             // timeout params
             HttpParams httpParameters = new BasicHttpParams();
