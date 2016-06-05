@@ -28,7 +28,7 @@ public class RestaurantActivity extends ActionBarActivity{
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        itemsData= new ArrayList<RestaurantItem>();
+        itemsData= new ArrayList<>();
         itemsData.add( new RestaurantItem(getString(R.string.res_contact),R.drawable.res_contact));
         itemsData.add( new RestaurantItem(getString(R.string.res_events),R.drawable.res_event));
         itemsData.add( new RestaurantItem(getString(R.string.res_reservation),R.drawable.res_reservation));
@@ -70,14 +70,14 @@ public class RestaurantActivity extends ActionBarActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    Toast m_currentToast;
+    Toast mCurrentToast;
 
     void showToast(String text) {
-        if (m_currentToast != null) {
-            m_currentToast.cancel();
+        if (mCurrentToast != null) {
+            mCurrentToast.cancel();
         }
-        m_currentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
-        m_currentToast.show();
+        mCurrentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+        mCurrentToast.show();
 
     }
 

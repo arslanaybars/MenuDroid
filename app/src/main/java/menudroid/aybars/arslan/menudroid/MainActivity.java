@@ -353,8 +353,8 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        Log.i("resultCode", "" + resultCode);
-        Log.i("requestCode", "" + requestCode);
+        Log.i("resultCode", Integer.toString(resultCode));
+        Log.i("requestCode",  Integer.toString(requestCode));
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
 
             try {
@@ -388,14 +388,14 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
     }
 
 
-    Toast m_currentToast;
+    Toast mCurrentToast;
 
     void showToast(String text) {
-        if (m_currentToast != null) {
-            m_currentToast.cancel();
+        if (mCurrentToast != null) {
+            mCurrentToast.cancel();
         }
-        m_currentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
-        m_currentToast.show();
+        mCurrentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+        mCurrentToast.show();
     }
 
     /* INTERFACE METHODS FROM OurTaskListener-SocketServerTask */

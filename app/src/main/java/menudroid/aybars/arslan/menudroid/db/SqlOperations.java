@@ -55,7 +55,7 @@ public class SqlOperations {
     public List<HashMap<String, String>> getOrder() {
 
         Cursor cursor;
-        List<HashMap<String, String>> allElementsDictionary = new ArrayList<HashMap<String, String>>();
+        List<HashMap<String, String>> allElementsDictionary = new ArrayList<>();
         String select = "SELECT quantity,price,food_name from OrderClient";
         cursor = database.rawQuery(select, null);
         if (cursor.getCount() == 0) // if there are no elements do nothing
@@ -72,7 +72,7 @@ public class SqlOperations {
                 if (qty > 0) {
                     float totalByFood = Float.parseFloat(cursor.getString(0)) * Float.parseFloat(cursor.getString(1));// qty * price
                     totalByOrder += totalByFood;
-                    HashMap<String, String> map = new HashMap<String, String>();
+                    HashMap<String, String> map = new HashMap<>();
                     map.put("totalByFood", String.valueOf(totalByFood));
                     map.put(KEY_QTY, cursor.getString(0));
                     map.put(KEY_PRICE, cursor.getString(1));
@@ -136,7 +136,7 @@ public class SqlOperations {
     }
 
 
-    public void AddOrSubstractProduct(int category_index, int food_index, String food, float price, int kindOperation) {
+    public void AddOrSubstractProduct(int categoryIndex, int foodIndex, String food, float price, int kindOperation) {
         /* kind Operation = add or Subtract
          1= add
          2= substract
@@ -144,14 +144,14 @@ public class SqlOperations {
 
      /*NOTE when you close the Session we have to delete this data to create a new order*/
         Cursor cursor;
-        String select = "SELECT quantity,_id FROM OrderClient where " + KEY_INDEX_CATEGORY + "=" + category_index +
-                " and " + KEY_INDEX_FOOD + "=" + food_index;
+        String select = "SELECT quantity,_id FROM OrderClient where " + KEY_INDEX_CATEGORY + "=" + categoryIndex +
+                " and " + KEY_INDEX_FOOD + "=" + foodIndex;
         cursor = database.rawQuery(select, null);
         if (cursor.getCount() == 0 && kindOperation == 1) // if there are no elements and the operation is ADD , set QTY in  1
         {
             ContentValues row = new ContentValues();
-            row.put(KEY_INDEX_CATEGORY, category_index);
-            row.put(KEY_INDEX_FOOD, food_index);
+            row.put(KEY_INDEX_CATEGORY, categoryIndex);
+            row.put(KEY_INDEX_FOOD, foodIndex);
             row.put(KEY_QTY, 1);
             row.put(KEY_FOOD_NAME, food);
             row.put(KEY_PRICE, String.valueOf(price));

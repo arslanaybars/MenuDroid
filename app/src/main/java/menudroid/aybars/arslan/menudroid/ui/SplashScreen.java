@@ -30,6 +30,7 @@ public class SplashScreen extends ActionBarActivity {
                     sleep(1000);// 4 second wait
                 } catch (InterruptedException e) {
                     Log.d("ERROR",e.toString());
+                    Thread.currentThread().interrupt();
                 } finally {
                     Intent intent = new Intent(SplashScreen.this, MainActivity.class);
                     startActivity(intent);
