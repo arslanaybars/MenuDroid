@@ -41,6 +41,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -263,30 +264,17 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
             }
         }
         // kind of exceptions.
-        catch (UnsupportedEncodingException e) {
-
-            jsonResponse = e.toString();
-            Log.d(EXCEPT, "" + jsonResponse);
-        } catch (ClientProtocolException e) {
-
+        catch (UnsupportedEncodingException|ClientProtocolException|ConnectException|SocketTimeoutException e) {
             jsonResponse = e.toString();
             Log.d(EXCEPT, "" + jsonResponse);
             throw new RuntimeException(e);
-        } catch (ConnectTimeoutException e) {
-
+        }
+        catch(IOException e){
             jsonResponse = e.toString();
             Log.d(EXCEPT, "" + jsonResponse);
             throw new RuntimeException(e);
-        } catch (SocketTimeoutException e) {
-
-            jsonResponse = e.toString();
-            Log.d(EXCEPT, "" + jsonResponse);
-        } catch (IOException e) {
-            jsonResponse = e.toString();
-            Log.d(EXCEPT, "" + jsonResponse);
-            throw new RuntimeException(e);
-
-        } catch (Exception e) {
+        }
+        catch(Exception e){
             jsonResponse = e.toString();
             Log.d(EXCEPT, "" + jsonResponse);
             throw new RuntimeException(e);
