@@ -96,75 +96,95 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
         imgSetIP.setOnClickListener(this);
     }
 
+    private void orderCase(){
+        Log.i(CLICKED, btnOrder.toString());
+        qrComplement = "O-";
+        if(qrResult == null || qrResult == QR_RESULT )
+            showDialogForBarcode();
+        else
+            showDialogMenu();
+    }
+    
+    private void billCase(){
+        Log.i(CLICKED, btnBill.toString());
+        qrComplement = "B-";
+        if(qrResult == null || qrResult == QR_RESULT )
+            showDialogForBarcode();
+        else
+            showDialogBill();
+//              need a dialog for ask you sure ? dialog have price and question
+    }
+
+    private void waiterCase(){
+        Log.i(CLICKED, btnWaiter.toString());
+        qrComplement = "W-";
+        //TODO session
+        //if statemant check the already table register or nor
+        if(qrResult == null || qrResult == QR_RESULT )
+            showDialogForBarcode();
+        else
+            showDialogWaiter();
+//              need a dialog for ask you sure ?
+    }
+
+    private void menuCase(){
+        Log.i(CLICKED, btnMenu.toString());
+        Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
+        startActivity(intentMenu);
+    }
+
+    private void loginCase(){
+        Log.i(CLICKED, btnLogin.toString());
+        //L- means, the user register the table
+        qrComplement = "L-";
+        scanBarcode();
+        //Create an instance of AsyncTask
+        //Pass the server ip, port and client message to the AsyncTask
+        //send from barcode reader
+
+    }
+
+    private void restaurantCase(){
+        Log.i(CLICKED, btnRestaurant.toString());
+        Intent intentRestaurant = new Intent(MainActivity.this, RestaurantActivity.class);
+        startActivity(intentRestaurant);
+
+    }
+
+    private void imgSetIPCase(){
+        Log.i(CLICKED, imgSetIP.toString());
+        showDialogIp();//Define the IP change dialog
+    }
 
     @Override
     public void onClick(View v) {
-
-
-
         /*
          *  Choose buttons
          */
         switch (v.getId()) {
             case R.id.btnOrder:
-                Log.i(CLICKED, btnOrder.toString());
-                qrComplement = "O-";
-                if(qrResult == null || qrResult == QR_RESULT )
-                    showDialogForBarcode();
-                else
-                    showDialogMenu();
-
+               orderCase();
                 break;
             case R.id.btnBill:
-                Log.i(CLICKED, btnBill.toString());
-                qrComplement = "B-";
-                if(qrResult == null || qrResult == QR_RESULT )
-                    showDialogForBarcode();
-                else
-                    showDialogBill();
-//              need a dialog for ask you sure ? dialog have price and question
+               billCase();
                 break;
             case R.id.btnWaiter:
-                Log.i(CLICKED, btnWaiter.toString());
-                qrComplement = "W-";
-                //TODO session
-                //if statemant check the already table register or nor
-                if(qrResult == null || qrResult == QR_RESULT )
-                    showDialogForBarcode();
-                else
-                    showDialogWaiter();
-//              need a dialog for ask you sure ?
+               waiterCase();
                 break;
             case R.id.btnMenu:
-                Log.i(CLICKED, btnMenu.toString());
-                Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
-                startActivity(intentMenu);
+                menuCase();
                 break;
             case R.id.btnLogin:
-                Log.i(CLICKED, btnLogin.toString());
-                //L- means, the user register the table
-                qrComplement = "L-";
-                scanBarcode();
-
-                //Create an instance of AsyncTask
-                //Pass the server ip, port and client message to the AsyncTask
-                //send from barcode reader
-
+               loginCase();
                 break;
             case R.id.btnRestaurant:
-                Log.i(CLICKED, btnRestaurant.toString());
-                Intent intentRestaurant = new Intent(MainActivity.this, RestaurantActivity.class);
-                startActivity(intentRestaurant);
                 break;
-
             case R.id.imgSetIP:
-                Log.i(CLICKED, imgSetIP.toString());
-                showDialogIp();//Define the IP change dialog
+               imgSetIPCase();
                 break;
             default:
                 break;
         }
-
     }
 
     //TODO need better design edittext and margin
