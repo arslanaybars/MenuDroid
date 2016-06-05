@@ -358,15 +358,15 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         return super.onOptionsItemSelected(item);
     }
 
-    Toast m_currentToast;
+    Toast mCurrentToast;
 
     //showToast method
     void showToast(String text) {
-        if (m_currentToast != null) {
-            m_currentToast.cancel();
+        if (mCurrentToast != null) {
+            mCurrentToast.cancel();
         }
-        m_currentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
-        m_currentToast.show();
+        mCurrentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
+        mCurrentToast.show();
 
     }
 
