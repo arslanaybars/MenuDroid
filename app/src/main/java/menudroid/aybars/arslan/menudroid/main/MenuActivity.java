@@ -236,7 +236,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
                 JSONObject jsonField = new JSONObject(result);
                 Log.d("JSON", jsonField.get("success").toString());
                 String success = jsonField.get("success").toString();
-                if (success.equals("1")) {
+                if  ("1".equals(success)) {
                     /* Detect field success has value 1*/
                     JSONArray CategoriesArray = jsonObject.getJSONArray("categories"); /*getting the JSON Array with the key categories */
                     if (CategoriesArray != null) {
@@ -440,7 +440,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
 
     @Override
     public void onOurTaskFinished(String result) {
-        if(result.equals("Connection Accepted")){
+        if ("Connection Accepted".equals(result)) {
             showToast("order is ok");
             //we could send the order, so we need to empty it.
             SqlOperations mysqlOperation= new SqlOperations(MenuActivity.this);
