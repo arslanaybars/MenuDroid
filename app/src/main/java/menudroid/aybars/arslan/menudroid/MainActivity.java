@@ -412,9 +412,9 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
     @Override
     public void onOurTaskFinished(String result) {
         if(result!=null) {
-            if (result.equals("Connection Accepted")) {
+            if ("Connection Accepted".equals(result)) {
                 showToast("Connection Done");
-                if (qrComplement.equals("B-")) {
+                if ("B-".equals(qrComplement)) {
                     //because the consumer said YES to the pay , we will erase the data.
                     SqlOperations sqlOperations = new SqlOperations(this);
                     sqlOperations.open();
