@@ -300,7 +300,6 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
                 is.close();
             } catch (IOException e) {
                 Log.d(ERROR,e.toString());
-                throw new RuntimeException(e);
             }
         }
         return sb.toString();
