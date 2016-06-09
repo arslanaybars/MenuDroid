@@ -6,11 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.net.nsd.NsdManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,9 +22,6 @@ import com.google.zxing.integration.android.IntentResult;
 
 import org.json.JSONObject;
 
-import java.net.InetAddress;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import menudroid.aybars.arslan.menudroid.asyncs.SocketServerTask;
 import menudroid.aybars.arslan.menudroid.db.SqlOperations;
