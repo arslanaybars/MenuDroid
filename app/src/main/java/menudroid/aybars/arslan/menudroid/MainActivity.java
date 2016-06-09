@@ -59,6 +59,7 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
     private JsonDataToSend jsonDataToSend;
     private Context c=this;
     private SocketServerTask serverAsyncTask;
+    Toast mCurrentToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -388,7 +389,7 @@ public class MainActivity extends ActionBarActivity implements SocketServerTask.
     }
 
 
-    Toast mCurrentToast;
+
 
     void showToast(String text) {
         if (mCurrentToast != null) {
