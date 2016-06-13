@@ -19,7 +19,7 @@ public class RestaurantActivity extends ActionBarActivity{
 
 
     ArrayList<RestaurantItem> itemsData;
-
+    Toast mCurrentToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,15 +70,12 @@ public class RestaurantActivity extends ActionBarActivity{
         return super.onOptionsItemSelected(item);
     }
 
-    Toast mCurrentToast;
-
     void showToast(String text) {
         if (mCurrentToast != null) {
             mCurrentToast.cancel();
         }
         mCurrentToast = Toast.makeText(this, text, Toast.LENGTH_LONG);
         mCurrentToast.show();
-
     }
 
 }

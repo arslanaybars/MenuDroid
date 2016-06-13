@@ -74,6 +74,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
 
     private String qrResult;
     private String qrComplement;
+    Toast mCurrentToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -353,7 +354,7 @@ public class MenuActivity extends ActionBarActivity implements SocketServerTask.
         return super.onOptionsItemSelected(item);
     }
 
-    Toast mCurrentToast;
+
 
     //showToast method
     void showToast(String text) {
